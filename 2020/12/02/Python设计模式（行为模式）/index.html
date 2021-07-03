@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+    <title itemprop="name">
+        Python实现设计模式(行为模式) |
+        
+        Ranshi</title>
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/css/lib.min.css" media="all">
+    <link rel="stylesheet" href="/css/font.css" media="all">
+    <link rel="stylesheet" href="/css/insight.css" media="all">
+    <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+    <link rel="stylesheet" href="/css/zoom.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+    <!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+    " type="text/css" media="all"> -->
+    <script>
+        /*Initial Variables*/
+        var mashiro_option = new Object();
+        var mashiro_global = new Object();
+        mashiro_option.NProgressON = true;
+        /*
+         * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+         * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+         */
+        mashiro_option.email_domain = "";
+        mashiro_option.email_name = "";
+        mashiro_option.cookie_version_control = "";
+        mashiro_option.qzone_autocomplete = false;
+        mashiro_option.site_name = "Renaissance.のRanshi";
+        mashiro_option.author_name = "Ranshi";
+        mashiro_option.site_url = "";
+        mashiro_option.v_appId = "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz";
+        mashiro_option.v_appKey = "GieWKHddp2zS74VdyalPK69u";
+        mashiro_option.mathjax = "0";
+        mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/";
+        mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+        // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+        // mashiro_option.float_player_on = true;
+
+        /*End of Initial Variables*/
+    </script>
+    <script type="text/javascript">
+        var bg = "https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg2.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg3.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg7.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg8.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg9.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg6.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg12.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg11.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg10.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg5.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.42/2020.12.16/4.jpg,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg4.jpg.webp".split(",");
+        var bgindex = Math.floor(Math.random() * bg.length);
+        if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+            alert('朋友，IE浏览器未适配哦~');
+        }
+    </script>
+    <style type="text/css">
+        .hljs-ln {
+            border-collapse: collapse
+        }
+
+        .hljs-ln td {
+            padding: 0
+        }
+
+        .hljs-ln-n:before {
+            content: attr(data-line-number)
+        }
+    </style>
+    <style type="text/css">.site-top .lower nav {
+            display: block !important;
+        }
+
+        .author-profile i, .post-like a, .post-share .show-share, .sub-text, .we-info a, span.sitename, .post-more i:hover, #pagination a:hover, .post-content a:hover, .float-content i:hover {
+            color: #FE9600
+        }
+
+        .feature i, .download, .navigator i:hover, .links ul li:before, .ar-time i, span.ar-circle, .object, .comment .comment-reply-link, .siren-checkbox-radio:checked + .siren-checkbox-radioInput:after {
+            background: #FE9600
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FE9600
+        }
+
+        .download, .navigator i:hover, .link-title, .links ul li:hover, #pagination a:hover, .comment-respond input[type='submit']:hover {
+            border-color: #FE9600
+        }
+
+        .entry-content a:hover, .site-info a:hover, .comment h4 a, #comments-navi a.prev, #comments-navi a.next, .comment h4 a:hover, .site-top ul li a:hover, .entry-title a:hover, #archives-temp h3, span.page-numbers.current, .sorry li a:hover, .site-title a:hover, i.iconfont.js-toggle-search.iconsearch:hover, .comment-respond input[type='submit']:hover {
+            color: #FE9600
+        }
+
+        .comments .comments-main {
+            display: block !important;
+        }
+
+        .comments .comments-hidden {
+            display: none !important;
+        }
+
+        background-position:center center
+
+        ;
+        background-attachment:inherit
+
+        ;
+        }
+    </style>
+</head>
+</html>
+
+<body
+    class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+    <div class="scrollbar" id="bar">
+    </div>
+    <a href="#" class="cd-top faa-float animated"></a>
+    <section id="main-container">
+        <div class="headertop filter-dot">
+    <div id="banner_wave_1"></div>
+    <div id="banner_wave_2"></div>
+    <figure id="centerbg" class="centerbg">
+        <div class="focusinfo no-select">
+            <div class="header-tou">
+                <a href="">
+                    <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/avatar.jpg">
+                </a>
+            </div>
+            <div class="header-info">
+                <p>成为更好的自己，才能守护最好的你</p>
+                <div class="top-social_v2">
+                    <li id="bg-pre">
+                        <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+                    </li>
+                    
+                        
+                            
+                                <li>
+                                    <a href="https://github.com/Zranshi" target="_blank" class="social-github"
+                                       title="github">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/github.png">
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="https://music.163.com/#/user/home?id=319231686" target="_blank" class="social-github"
+                                       title="wangyiyun">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/wangyiyun.png">
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="https://www.zhihu.com/people/ran-shi-2" target="_blank" class="social-github"
+                                       title="zhihu">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/zhihu.png">
+                                    </a>
+                                </li>
+                            
+                        
+                    
+                    <li id="bg-next">
+                        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+                    </li>
+                </div>
+            </div>
+        </div>
+    </figure>
+    <div id="video-container" style="">
+        <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+        </video>
+        <div id="video-btn" class="loadvideo videolive">
+        </div>
+        <div id="video-add">
+        </div>
+        <div class="video-stu">
+        </div>
+    </div>
+    <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+    </div>
+</div>
+
+        <div id="page" class="site wrapper">
+            <header class="site-header no-select gizle sabit" role="banner">
+    <div class="site-top">
+        <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">Renaissance.の</span>
+            <span class="shironeko">Ranshi</span>
+          </a>
+        </span>
+      </span>
+        </div>
+        <div class="searchbox search-form-submit">
+            <i class="iconfont js-toggle-search iconsearch icon-search">
+            </i>
+        </div>
+        <div id="show-nav" class="showNav mobile-fit">
+            <div class="line line1">
+            </div>
+            <div class="line line2">
+            </div>
+            <div class="line line3">
+            </div>
+        </div>
+        <div class="lower-cantiner">
+            <div class="lower">
+                <nav class="mobile-fit-control hide">
+                    <ul id="menu-new" class="menu">
+                        
+                            <li>
+                                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/categories/技术/">
+                                                    <i class="fa fa-code"
+                                                       aria-hidden="true"></i>
+                                                    技术
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/生活/">
+                                                    <i class="fa fa-file-text-o"
+                                                       aria-hidden="true"></i>
+                                                    生活
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/资源/">
+                                                    <i class="fa fa-cloud-download"
+                                                       aria-hidden="true"></i>
+                                                    资源
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/随想/">
+                                                    <i class="fa fa-commenting-o"
+                                                       aria-hidden="true"></i>
+                                                    随想
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/转载/">
+                                                    <i class="fa fa-book"
+                                                       aria-hidden="true"></i>
+                                                    转载
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/tags/悦读/">
+                                                    <i class="fa fa-th-list faa-bounce"
+                                                       aria-hidden="true"></i>
+                                                    书单
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/bangumi/">
+                                                    <i class="fa fa-film faa-vertical"
+                                                       aria-hidden="true"></i>
+                                                    番组
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/music/">
+                                                    <i class="fa fa-headphones"
+                                                       aria-hidden="true"></i>
+                                                    歌单
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/tags/图集/">
+                                                    <i class="fa fa-photo"
+                                                       aria-hidden="true"></i>
+                                                    图集
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about/">
+                                                    <i class="fa fa-meetup"
+                                                       aria-hidden="true"></i>
+                                                    我？
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/theme-sakura/">
+                                                    <i class="fa iconfont icon-sakura"
+                                                       aria-hidden="true"></i>
+                                                    主题
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/lab/">
+                                                    <i class="fa fa-cogs"
+                                                       aria-hidden="true"></i>
+                                                    Lab
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/client/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+                    客户端
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+    <div class="pattern-center single-center">
+        <!-- 有配图默认渲染第一张 -->
+        <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/106.jpg);"
+             src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/106.jpg">
+        </div>
+        <header class="pattern-header single-header">
+            <h1 class="entry-title">
+                Python实现设计模式(行为模式)</h1>
+            <p class="entry-census">
+        <span>
+          <a href="https://github.com/Zranshi">
+            <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg">
+          </a>
+        </span>
+                <span>
+          <a href="https://github.com/Zranshi">ranshi</a>
+        </span>
+                <span class="bull">
+        ·</span>
+                2020-12-2<span class="bull">
+        ·</span>
+                <span id="busuanzi_value_page_pv"></span>次阅读</p>
+        </header>
+    </div>
+
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main" role="main">
+            <article id="post-1"
+                     class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+                <div class="toc"></div>
+                <!--<div class="toc-entry-content"> 套嵌目录使用（主要为了支援评论）-->
+                
+                <div class="entry-content">
+                    <h1 id="行为模式"><a href="#行为模式" class="headerlink" title="行为模式"></a>行为模式</h1><p>责任链模式是一种行为设计模式， 允许你将请求沿着处理者链进行发送。 收到请求后， 每个处理者均可对请求进行处理， 或将其传递给链上的下个处理者。</p>
+<h2 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><a href="https://refactoringguru.cn/design-patterns/chain-of-responsibility" target="_blank" rel="noopener">责任链模式</a></h2><h3 id="Python代码"><a href="#Python代码" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import Any, Optional
+
+
+class Handler(ABC):
+    @abstractmethod
+    def set_next(self, handler: Handler) -&gt; Handler:
+        pass
+
+    @abstractmethod
+    def handle(self, request) -&gt; Optional[str]:
+        pass
+
+
+class AbstractHandler(Handler):
+    _next_handler: Handler = None
+
+    def set_next(self, handler: Handler) -&gt; Handler:
+        self._next_handler = handler
+        # Returning a handler from here will let us link handlers in a
+        # convenient way like this:
+        # monkey.set_next(squirrel).set_next(dog)
+        return handler
+
+    @abstractmethod
+    def handle(self, request: Any) -&gt; str:
+        if self._next_handler:
+            return self._next_handler.handle(request)
+
+        return None
+
+
+class MonkeyHandler(AbstractHandler):
+    def handle(self, request: Any) -&gt; str:
+        if request == &quot;Banana&quot;:
+            return f&quot;Monkey: I&#39;ll eat the {request}&quot;
+        else:
+            return super().handle(request)
+
+
+class SquirrelHandler(AbstractHandler):
+    def handle(self, request: Any) -&gt; str:
+        if request == &quot;Nut&quot;:
+            return f&quot;Squirrel: I&#39;ll eat the {request}&quot;
+        else:
+            return super().handle(request)
+
+
+class DogHandler(AbstractHandler):
+    def handle(self, request: Any) -&gt; str:
+        if request == &quot;MeatBall&quot;:
+            return f&quot;Dog: I&#39;ll eat the {request}&quot;
+        else:
+            return super().handle(request)
+
+
+def client_code(handler: Handler) -&gt; None:
+    for food in [&quot;Nut&quot;, &quot;Banana&quot;, &quot;Cup of coffee&quot;]:
+        print(f&quot;\nClient: Who wants a {food}?&quot;)
+        result = handler.handle(food)
+        if result:
+            print(f&quot;  {result}&quot;, end=&quot;&quot;)
+        else:
+            print(f&quot;  {food} was left untouched.&quot;, end=&quot;&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    monkey = MonkeyHandler()
+    squirrel = SquirrelHandler()
+    dog = DogHandler()
+    monkey.set_next(squirrel).set_next(dog)
+    print(&quot;Chain: Monkey &gt; Squirrel &gt; Dog&quot;)
+    client_code(monkey)
+    print(&quot;\n&quot;)
+    print(&quot;Subchain: Squirrel &gt; Dog&quot;)
+    client_code(squirrel)
+
+# output:
+# Chain: Monkey &gt; Squirrel &gt; Dog
+
+# Client: Who wants a Nut?
+#   Squirrel: I&#39;ll eat the Nut
+# Client: Who wants a Banana?
+#   Monkey: I&#39;ll eat the Banana
+# Client: Who wants a Cup of coffee?
+#   Cup of coffee was left untouched.
+
+# Subchain: Squirrel &gt; Dog
+
+# Client: Who wants a Nut?
+#   Squirrel: I&#39;ll eat the Nut
+# Client: Who wants a Banana?
+#   Banana was left untouched.
+# Client: Who wants a Cup of coffee?
+#   Cup of coffee was left untouched.
+</code></pre>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/chain-of-responsibility/structure-2x.png" alt></p>
+<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><a href="https://refactoringguru.cn/design-patterns/command" target="_blank" rel="noopener">命令模式</a></h2><p>命令模式是一种行为设计模式， 它可将请求转换为一个包含与请求相关的所有信息的独立对象。 该转换让你能根据不同的请求将方法参数化、 延迟请求执行或将其放入队列中， 且能实现可撤销操作。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/command/structure-2x.png" alt></p>
+<h3 id="Python代码-1"><a href="#Python代码-1" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class Command(ABC):
+    @abstractmethod
+    def execute(self) -&gt; None:
+        pass
+
+
+class SimpleCommand(Command):
+    def __init__(self, payload: str) -&gt; None:
+        self._payload = payload
+
+    def execute(self) -&gt; None:
+        print(
+            f&quot;SimpleCommand: See, I can do simple things like printing&quot;f&quot;({self._payload})&quot;)
+
+
+class ComplexCommand(Command):
+    def __init__(self, receiver: Receiver, a: str, b: str) -&gt; None:
+        self._receiver = receiver
+        self._a = a
+        self._b = b
+
+    def execute(self) -&gt; None:
+        print(&quot;ComplexCommand: Complex stuff should be done by a receiver object&quot;, end=&quot;&quot;)
+        self._receiver.do_something(self._a)
+        self._receiver.do_something_else(self._b)
+
+
+class Receiver:
+    def do_something(self, a: str) -&gt; None:
+        print(f&quot;\nReceiver: Working on ({a}.)&quot;, end=&quot;&quot;)
+
+    def do_something_else(self, b: str) -&gt; None:
+        print(f&quot;\nReceiver: Also working on ({b}.)&quot;, end=&quot;&quot;)
+
+
+class Invoker:
+    _on_start = None
+    _on_finish = None
+
+    def set_on_start(self, command: Command):
+        self._on_start = command
+
+    def set_on_finish(self, command: Command):
+        self._on_finish = command
+
+    def do_something_important(self) -&gt; None:
+        print(&quot;Invoker: Does anybody want something done before I begin?&quot;)
+        if isinstance(self._on_start, Command):
+            self._on_start.execute()
+
+        print(&quot;Invoker: ...doing something really important...&quot;)
+
+        print(&quot;Invoker: Does anybody want something done after I finish?&quot;)
+        if isinstance(self._on_finish, Command):
+            self._on_finish.execute()
+
+
+if __name__ == &quot;__main__&quot;:
+    invoker = Invoker()
+    invoker.set_on_start(SimpleCommand(&quot;Say Hi!&quot;))
+    receiver = Receiver()
+    invoker.set_on_finish(ComplexCommand(
+        receiver, &quot;Send email&quot;, &quot;Save report&quot;))
+
+    invoker.do_something_important()
+
+# output:
+# Invoker: Does anybody want something done before I begin?
+# SimpleCommand: See, I can do simple things like printing(Say Hi!)
+# Invoker: ...doing something really important...
+# Invoker: Does anybody want something done after I finish?
+# ComplexCommand: Complex stuff should be done by a receiver object
+# Receiver: Working on (Send email.)
+# Receiver: Also working on (Save report.)
+</code></pre>
+<h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a><a href="https://refactoringguru.cn/design-patterns/iterator" target="_blank" rel="noopener">迭代器模式</a></h2><p>迭代器模式是一种行为设计模式， 让你能在不暴露集合底层表现形式 （列表、 栈和树等） 的情况下遍历集合中所有的元素。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/iterator/structure-2x.png" alt></p>
+<h3 id="Python代码-2"><a href="#Python代码-2" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from collections.abc import Iterable, Iterator
+from typing import Any, List
+
+
+class AlphabeticalOrderIterator(Iterator):
+
+    _position: int = None
+
+    _reverse: bool = False
+
+    def __init__(self, collection: WordsCollection, reverse: bool = False) -&gt; None:
+        self._collection = collection
+        self._reverse = reverse
+        self._position = -1 if reverse else 0
+
+    def __next__(self):
+        try:
+            value = self._collection[self._position]
+            self._position += -1 if self._reverse else 1
+        except IndexError:
+            raise StopIteration()
+
+        return value
+
+
+class WordsCollection(Iterable):
+    def __init__(self, collection: List[Any] = []) -&gt; None:
+        self._collection = collection
+
+    def __iter__(self) -&gt; AlphabeticalOrderIterator:
+        return AlphabeticalOrderIterator(self._collection)
+
+    def get_reverse_iterator(self) -&gt; AlphabeticalOrderIterator:
+        return AlphabeticalOrderIterator(self._collection, True)
+
+    def add_item(self, item: Any):
+        self._collection.append(item)
+
+
+if __name__ == &quot;__main__&quot;:
+    collection = WordsCollection()
+    collection.add_item(&quot;First&quot;)
+    collection.add_item(&quot;Second&quot;)
+    collection.add_item(&quot;Third&quot;)
+
+    print(&quot;Straight traversal:&quot;)
+    print(&quot;\n&quot;.join(collection))
+    print(&quot;&quot;)
+
+    print(&quot;Reverse traversal:&quot;)
+    print(&quot;\n&quot;.join(collection.get_reverse_iterator()), end=&quot;&quot;)
+
+# output:
+# Straight traversal:
+# First
+# Second
+# Third
+
+# Reverse traversal:
+# Third
+# Second
+# First
+</code></pre>
+<h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a><a href="https://refactoringguru.cn/design-patterns/mediator" target="_blank" rel="noopener">中介者模式</a></h2><p>中介者模式是一种行为设计模式， 能让你减少对象之间混乱无序的依赖关系。 该模式会限制对象之间的直接交互， 迫使它们通过一个中介者对象进行合作。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/mediator/structure-2x.png" alt></p>
+<h3 id="Python代码-3"><a href="#Python代码-3" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC
+
+
+class Mediator(ABC):
+    def notify(self, sender: object, event: str) -&gt; None:
+        pass
+
+
+class ConcreteMediator(Mediator):
+    def __init__(self, component1: Component1, component2: Component2) -&gt; None:
+        self._component1 = component1
+        self._component1.mediator = self
+        self._component2 = component2
+        self._component2.mediator = self
+
+    def notify(self, sender: object, event: str) -&gt; None:
+        if event == &quot;A&quot;:
+            print(&quot;Mediator reacts on A and triggers following operations:&quot;)
+            self._component2.do_c()
+        elif event == &quot;D&quot;:
+            print(&quot;Mediator reacts on D and triggers following operations:&quot;)
+            self._component1.do_b()
+            self._component2.do_c()
+
+
+class BaseComponent:
+    def __init__(self, mediator: Mediator = None) -&gt; None:
+        self._mediator = mediator
+
+    @property
+    def mediator(self) -&gt; Mediator:
+        return self._mediator
+
+    @mediator.setter
+    def mediator(self, mediator: Mediator) -&gt; None:
+        self._mediator = mediator
+
+
+class Component1(BaseComponent):
+    def do_a(self) -&gt; None:
+        print(&quot;Component 1 does A.&quot;)
+        self.mediator.notify(self, &quot;A&quot;)
+
+    def do_b(self) -&gt; None:
+        print(&quot;Component 1 does B.&quot;)
+        self.mediator.notify(self, &quot;B&quot;)
+
+
+class Component2(BaseComponent):
+    def do_c(self) -&gt; None:
+        print(&quot;Component 2 does C.&quot;)
+        self.mediator.notify(self, &quot;C&quot;)
+
+    def do_d(self) -&gt; None:
+        print(&quot;Component 2 does D.&quot;)
+        self.mediator.notify(self, &quot;D&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    c1 = Component1()
+    c2 = Component2()
+    mediator = ConcreteMediator(c1, c2)
+
+    print(&quot;Client triggers operation A.&quot;)
+    c1.do_a()
+    print(&quot;\n&quot;, end=&quot;&quot;)
+    print(&quot;Client triggers operation D.&quot;)
+    c2.do_d()
+
+# output:
+# Client triggers operation A.
+# Component 1 does A.
+# Mediator reacts on A and triggers following operations:
+# Component 2 does C.
+
+# Client triggers operation D.
+# Component 2 does D.
+# Mediator reacts on D and triggers following operations:
+# Component 1 does B.
+# Component 2 does C.
+</code></pre>
+<h2 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a><a href="https://refactoringguru.cn/design-patterns/memento" target="_blank" rel="noopener">备忘录模式</a></h2><p>备忘录模式是一种行为设计模式， 允许在不暴露对象实现细节的情况下保存和恢复对象之前的状态。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/memento/structure1-2x.png" alt></p>
+<h3 id="Python代码-4"><a href="#Python代码-4" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from datetime import datetime
+from random import sample
+from string import ascii_letters, digits
+
+
+class Originator():
+    _state = None
+    def __init__(self, state: str) -&gt; None:
+        self._state = state
+        print(f&quot;Originator: My initial state is: {self._state}&quot;)
+
+    def do_something(self) -&gt; None:
+        print(&quot;Originator: I&#39;m doing something important.&quot;)
+        self._state = self._generate_random_string(30)
+        print(f&quot;Originator: and my state has changed to: {self._state}&quot;)
+
+    def _generate_random_string(self, length: int = 10) -&gt; None:
+        return &quot;&quot;.join(sample(ascii_letters, length))
+
+    def save(self) -&gt; Memento:
+        return ConcreteMemento(self._state)
+
+    def restore(self, memento: Memento) -&gt; None:
+        &quot;&quot;&quot;
+        Restores the Originator&#39;s state from a memento object.
+        &quot;&quot;&quot;
+
+        self._state = memento.get_state()
+        print(f&quot;Originator: My state has changed to: {self._state}&quot;)
+
+
+class Memento(ABC):
+    @abstractmethod
+    def get_name(self) -&gt; str:
+        pass
+
+    @abstractmethod
+    def get_date(self) -&gt; str:
+        pass
+
+
+class ConcreteMemento(Memento):
+    def __init__(self, state: str) -&gt; None:
+        self._state = state
+        self._date = str(datetime.now())[:19]
+
+    def get_state(self) -&gt; str:
+        &quot;&quot;&quot;
+        The Originator uses this method when restoring its state.
+        &quot;&quot;&quot;
+        return self._state
+
+    def get_name(self) -&gt; str:
+        &quot;&quot;&quot;
+        The rest of the methods are used by the Caretaker to display metadata.
+        &quot;&quot;&quot;
+
+        return f&quot;{self._date} / ({self._state[0:9]}...)&quot;
+
+    def get_date(self) -&gt; str:
+        return self._date
+
+
+class Caretaker():
+    def __init__(self, originator: Originator) -&gt; None:
+        self._mementos = []
+        self._originator = originator
+
+    def backup(self) -&gt; None:
+        print(&quot;\nCaretaker: Saving Originator&#39;s state...&quot;)
+        self._mementos.append(self._originator.save())
+
+    def undo(self) -&gt; None:
+        if not len(self._mementos):
+            return
+
+        memento = self._mementos.pop()
+        print(f&quot;Caretaker: Restoring state to: {memento.get_name()}&quot;)
+        try:
+            self._originator.restore(memento)
+        except Exception:
+            self.undo()
+
+    def show_history(self) -&gt; None:
+        print(&quot;Caretaker: Here&#39;s the list of mementos:&quot;)
+        for memento in self._mementos:
+            print(memento.get_name())
+
+
+if __name__ == &quot;__main__&quot;:
+    originator = Originator(&quot;Super-duper-super-puper-super.&quot;)
+    caretaker = Caretaker(originator)
+    caretaker.backup()
+    originator.do_something()
+    caretaker.backup()
+    originator.do_something()
+    caretaker.backup()
+    originator.do_something()
+
+    print()
+    caretaker.show_history()
+    print(&quot;\nClient: Now, let&#39;s rollback!\n&quot;)
+    caretaker.undo()
+    print(&quot;\nClient: Once more!\n&quot;)
+    caretaker.undo()
+
+# output:
+# Originator: My initial state is: Super-duper-super-puper-super.
+
+# Caretaker: Saving Originator&#39;s state...
+# Originator: I&#39;m doing something important.
+# Originator: and my state has changed to: mEOzwWHfnTMZYsplgQrtIxjqeVJNRX
+
+# Caretaker: Saving Originator&#39;s state...
+# Originator: I&#39;m doing something important.
+# Originator: and my state has changed to: VXFgbuBNUZIRDrwThxSiPJcHlevAGo
+
+# Caretaker: Saving Originator&#39;s state...
+# Originator: I&#39;m doing something important.
+# Originator: and my state has changed to: ifIzXcxHLrltsdqyWRpMTNYoZvBCVb
+
+# Caretaker: Here&#39;s the list of mementos:
+# 2020-12-02 17:05:55 / (Super-dup...)
+# 2020-12-02 17:05:55 / (mEOzwWHfn...)
+# 2020-12-02 17:05:55 / (VXFgbuBNU...)
+
+# Client: Now, let&#39;s rollback!
+
+# Caretaker: Restoring state to: 2020-12-02 17:05:55 / (VXFgbuBNU...)
+# Originator: My state has changed to: VXFgbuBNUZIRDrwThxSiPJcHlevAGo
+
+# Client: Once more!
+
+# Caretaker: Restoring state to: 2020-12-02 17:05:55 / (mEOzwWHfn...)
+# Originator: My state has changed to: mEOzwWHfnTMZYsplgQrtIxjqeVJNRX
+</code></pre>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a><a href="https://refactoringguru.cn/design-patterns/observer" target="_blank" rel="noopener">观察者模式</a></h2><p>观察者模式是一种行为设计模式， 允许你定义一种订阅机制， 可在对象事件发生时通知多个 “观察” 该对象的其他对象。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/observer/structure-2x.png" alt></p>
+<h3 id="Python代码-5"><a href="#Python代码-5" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from random import randrange
+from typing import List
+
+
+class Subject(ABC):
+    @abstractmethod
+    def attach(self, observer: Observer) -&gt; None:
+        pass
+
+    @abstractmethod
+    def detach(self, observer: Observer) -&gt; None:
+        pass
+
+    @abstractmethod
+    def notify(self) -&gt; None:
+        pass
+
+
+class ConcreteSubject(Subject):
+    _state: int = None
+    _observers: List[Observer] = []
+
+    def attach(self, observer: Observer) -&gt; None:
+        print(&quot;Subject: Attached an observer.&quot;)
+        self._observers.append(observer)
+
+    def detach(self, observer: Observer) -&gt; None:
+        self._observers.remove(observer)
+
+    def notify(self) -&gt; None:
+        print(&quot;Subject: Notifying observers...&quot;)
+        for observer in self._observers:
+            observer.update(self)
+
+    def some_business_logic(self) -&gt; None:
+        print(&quot;\nSubject: I&#39;m doing something important.&quot;)
+        self._state = randrange(0, 10)
+
+        print(f&quot;Subject: My state has just changed to: {self._state}&quot;)
+        self.notify()
+
+
+class Observer(ABC):
+    @abstractmethod
+    def update(self, subject: Subject) -&gt; None:
+        &quot;&quot;&quot;
+        Receive update from subject.
+        &quot;&quot;&quot;
+        pass
+
+
+class ConcreteObserverA(Observer):
+    def update(self, subject: Subject) -&gt; None:
+        if subject._state &lt; 3:
+            print(&quot;ConcreteObserverA: Reacted to the event&quot;)
+
+
+class ConcreteObserverB(Observer):
+    def update(self, subject: Subject) -&gt; None:
+        if subject._state == 0 or subject._state &gt;= 2:
+            print(&quot;ConcreteObserverB: Reacted to the event&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    subject = ConcreteSubject()
+    observer_a = ConcreteObserverA()
+    subject.attach(observer_a)
+    observer_b = ConcreteObserverB()
+    subject.attach(observer_b)
+    subject.some_business_logic()
+    subject.some_business_logic()
+    subject.detach(observer_a)
+    subject.some_business_logic()
+
+# output:
+# Subject: Attached an observer.
+# Subject: Attached an observer.
+
+# Subject: I&#39;m doing something important.
+# Subject: My state has just changed to: 2
+# Subject: Notifying observers...
+# ConcreteObserverA: Reacted to the event
+# ConcreteObserverB: Reacted to the event
+
+# Subject: I&#39;m doing something important.
+# Subject: My state has just changed to: 0
+# Subject: Notifying observers...
+# ConcreteObserverA: Reacted to the event
+# ConcreteObserverB: Reacted to the event
+
+# Subject: I&#39;m doing something important.
+# Subject: My state has just changed to: 9
+# Subject: Notifying observers...
+# ConcreteObserverB: Reacted to the event
+</code></pre>
+<h2 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><a href="https://refactoringguru.cn/design-patterns/state" target="_blank" rel="noopener">状态模式</a></h2><p>状态模式是一种行为设计模式， 让你能在一个对象的内部状态变化时改变其行为， 使其看上去就像改变了自身所属的类一样。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/state/structure-zh-2x.png" alt></p>
+<h3 id="Python代码-6"><a href="#Python代码-6" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class Context:
+    _state = None
+
+    def __init__(self, state: State) -&gt; None:
+        self.transition_to(state)
+
+    def transition_to(self, state: State):
+        print(f&quot;Context: Transition to {type(state).__name__}&quot;)
+        self._state = state
+        self._state.context = self
+
+    def request1(self):
+        self._state.handle1()
+
+    def request2(self):
+        self._state.handle2()
+
+
+class State(ABC):
+    @property
+    def context(self) -&gt; Context:
+        return self._context
+
+    @context.setter
+    def context(self, context: Context) -&gt; None:
+        self._context = context
+
+    @abstractmethod
+    def handle1(self) -&gt; None:
+        pass
+
+    @abstractmethod
+    def handle2(self) -&gt; None:
+        pass
+
+
+class ConcreteStateA(State):
+    def handle1(self) -&gt; None:
+        print(&quot;ConcreteStateA handles request1.&quot;)
+        print(&quot;ConcreteStateA wants to change the state of the context.&quot;)
+        self.context.transition_to(ConcreteStateB())
+
+    def handle2(self) -&gt; None:
+        print(&quot;ConcreteStateA handles request2.&quot;)
+
+
+class ConcreteStateB(State):
+    def handle1(self) -&gt; None:
+        print(&quot;ConcreteStateB handles request1.&quot;)
+
+    def handle2(self) -&gt; None:
+        print(&quot;ConcreteStateB handles request2.&quot;)
+        print(&quot;ConcreteStateB wants to change the state of the context.&quot;)
+        self.context.transition_to(ConcreteStateA())
+
+
+if __name__ == &quot;__main__&quot;:
+    context = Context(ConcreteStateA())
+    context.request1()
+    context.request2()
+
+# output:
+# Context: Transition to ConcreteStateA
+# ConcreteStateA handles request1.
+# ConcreteStateA wants to change the state of the context.
+# Context: Transition to ConcreteStateB
+# ConcreteStateB handles request2.
+# ConcreteStateB wants to change the state of the context.
+# Context: Transition to ConcreteStateA
+</code></pre>
+<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><a href="https://refactoringguru.cn/design-patterns/strategy" target="_blank" rel="noopener">策略模式</a></h2><p>策略模式是一种行为设计模式， 它能让你定义一系列算法， 并将每种算法分别放入独立的类中， 以使算法的对象能够相互替换。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/strategy/structure-2x.png" alt></p>
+<h3 id="Python代码-7"><a href="#Python代码-7" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import List
+
+
+class Context():
+    def __init__(self, strategy: Strategy) -&gt; None:
+        self._strategy = strategy
+
+    @property
+    def strategy(self) -&gt; Strategy:
+        return self._strategy
+
+    @strategy.setter
+    def strategy(self, strategy: Strategy) -&gt; None:
+        self._strategy = strategy
+
+    def do_some_business_logic(self) -&gt; None:
+        print(&quot;Context: Sorting data using the strategy (not sure how it&#39;ll do it)&quot;)
+        result = self._strategy.do_algorithm([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;])
+        print(&quot;,&quot;.join(result))
+
+
+class Strategy(ABC):
+    @abstractmethod
+    def do_algorithm(self, data: List):
+        pass
+
+
+class ConcreteStrategyA(Strategy):
+    def do_algorithm(self, data: List) -&gt; List:
+        return sorted(data)
+
+
+class ConcreteStrategyB(Strategy):
+    def do_algorithm(self, data: List) -&gt; List:
+        return reversed(sorted(data))
+
+
+if __name__ == &quot;__main__&quot;:
+    context = Context(ConcreteStrategyA())
+    print(&quot;Client: Strategy is set to normal sorting.&quot;)
+    context.do_some_business_logic()
+    print()
+
+    print(&quot;Client: Strategy is set to reverse sorting.&quot;)
+    context.strategy = ConcreteStrategyB()
+    context.do_some_business_logic()
+
+output:
+Client: Strategy is set to normal sorting.
+Context: Sorting data using the strategy (not sure how it&#39;ll do it)
+a,b,c,d,e
+
+Client: Strategy is set to reverse sorting.
+Context: Sorting data using the strategy (not sure how it&#39;ll do it)
+e,d,c,b,a
+</code></pre>
+<h2 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a><a href="https://refactoringguru.cn/design-patterns/template-method" target="_blank" rel="noopener">模板方法模式</a></h2><p>模板方法模式是一种行为设计模式， 它在超类中定义了一个算法的框架， 允许子类在不修改结构的情况下重写算法的特定步骤。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/template-method/structure-2x.png" alt></p>
+<h3 id="Python代码-8"><a href="#Python代码-8" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from abc import ABC, abstractmethod
+
+
+class AbstractClass(ABC):
+    def template_method(self) -&gt; None:
+        self.base_operation1()
+        self.required_operations1()
+        self.base_operation2()
+        self.hook1()
+        self.required_operations2()
+        self.base_operation3()
+        self.hook2()
+
+    def base_operation1(self) -&gt; None:
+        print(&quot;AbstractClass says: I am doing the bulk of the work&quot;)
+
+    def base_operation2(self) -&gt; None:
+        print(&quot;AbstractClass says: But I let subclasses override some operations&quot;)
+
+    def base_operation3(self) -&gt; None:
+        print(&quot;AbstractClass says: But I am doing the bulk of the work anyway&quot;)
+
+    @abstractmethod
+    def required_operations1(self) -&gt; None:
+        pass
+
+    @abstractmethod
+    def required_operations2(self) -&gt; None:
+        pass
+
+    def hook1(self) -&gt; None:
+        pass
+
+    def hook2(self) -&gt; None:
+        pass
+
+
+class ConcreteClass1(AbstractClass):
+    def required_operations1(self) -&gt; None:
+        print(&quot;ConcreteClass1 says: Implemented Operation1&quot;)
+
+    def required_operations2(self) -&gt; None:
+        print(&quot;ConcreteClass1 says: Implemented Operation2&quot;)
+
+
+class ConcreteClass2(AbstractClass):
+    def required_operations1(self) -&gt; None:
+        print(&quot;ConcreteClass2 says: Implemented Operation1&quot;)
+
+    def required_operations2(self) -&gt; None:
+        print(&quot;ConcreteClass2 says: Implemented Operation2&quot;)
+
+    def hook1(self) -&gt; None:
+        print(&quot;ConcreteClass2 says: Overridden Hook1&quot;)
+
+
+def client_code(abstract_class: AbstractClass) -&gt; None:
+    abstract_class.template_method()
+
+
+if __name__ == &quot;__main__&quot;:
+    print(&quot;Same client code can work with different subclasses:&quot;)
+    client_code(ConcreteClass1())
+    print(&quot;&quot;)
+    print(&quot;Same client code can work with different subclasses:&quot;)
+    client_code(ConcreteClass2())
+
+# output:
+# Same client code can work with different subclasses:
+# AbstractClass says: I am doing the bulk of the work
+# ConcreteClass1 says: Implemented Operation1
+# AbstractClass says: But I let subclasses override some operations
+# ConcreteClass1 says: Implemented Operation2
+# AbstractClass says: But I am doing the bulk of the work anyway
+
+# Same client code can work with different subclasses:
+# AbstractClass says: I am doing the bulk of the work
+# ConcreteClass2 says: Implemented Operation1
+# AbstractClass says: But I let subclasses override some operations
+# ConcreteClass2 says: Overridden Hook1
+# ConcreteClass2 says: Implemented Operation2
+# AbstractClass says: But I am doing the bulk of the work anyway
+</code></pre>
+<h2 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a><a href="https://refactoringguru.cn/design-patterns/visitor" target="_blank" rel="noopener">访问者模式</a></h2><p>访问者模式是一种行为设计模式， 它能将算法与其所作用的对象隔离开来。</p>
+<p><img src="https://refactoringguru.cn/images/patterns/diagrams/visitor/structure-zh-2x.png" alt></p>
+<h3 id="Python代码-9"><a href="#Python代码-9" class="headerlink" title="Python代码"></a>Python代码</h3><pre><code class="python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import List
+
+
+class Component(ABC):
+    @abstractmethod
+    def accept(self, visitor: Visitor) -&gt; None:
+        pass
+
+
+class ConcreteComponentA(Component):
+    def accept(self, visitor: Visitor) -&gt; None:
+        visitor.visit_concrete_component_a(self)
+
+    def exclusive_method_of_concrete_component_a(self) -&gt; str:
+        return &quot;A&quot;
+
+
+class ConcreteComponentB(Component):
+    def accept(self, visitor: Visitor):
+        visitor.visit_concrete_component_b(self)
+
+    def special_method_of_concrete_component_b(self) -&gt; str:
+        return &quot;B&quot;
+
+
+class Visitor(ABC):
+    @abstractmethod
+    def visit_concrete_component_a(self, element: ConcreteComponentA) -&gt; None:
+        pass
+
+    @abstractmethod
+    def visit_concrete_component_b(self, element: ConcreteComponentB) -&gt; None:
+        pass
+
+
+class ConcreteVisitor1(Visitor):
+    def visit_concrete_component_a(self, element) -&gt; None:
+        print(
+            f&quot;{element.exclusive_method_of_concrete_component_a()} + ConcreteVisitor1&quot;)
+
+    def visit_concrete_component_b(self, element) -&gt; None:
+        print(f&quot;{element.special_method_of_concrete_component_b()} + ConcreteVisitor1&quot;)
+
+
+class ConcreteVisitor2(Visitor):
+    def visit_concrete_component_a(self, element) -&gt; None:
+        print(
+            f&quot;{element.exclusive_method_of_concrete_component_a()} + ConcreteVisitor2&quot;)
+
+    def visit_concrete_component_b(self, element) -&gt; None:
+        print(f&quot;{element.special_method_of_concrete_component_b()} + ConcreteVisitor2&quot;)
+
+
+def client_code(components: List[Component], visitor: Visitor) -&gt; None:
+    for component in components:
+        component.accept(visitor)
+
+
+if __name__ == &quot;__main__&quot;:
+    components = [ConcreteComponentA(), ConcreteComponentB()]
+
+    print(&quot;The client code works with all visitors via the base Visitor interface:&quot;)
+    visitor1 = ConcreteVisitor1()
+    client_code(components, visitor1)
+
+    print(&quot;It allows the same client code to work with different types of visitors:&quot;)
+    visitor2 = ConcreteVisitor2()
+    client_code(components, visitor2)
+
+# output:
+# The client code works with all visitors via the base Visitor interface:
+# A + ConcreteVisitor1
+# B + ConcreteVisitor1
+# It allows the same client code to work with different types of visitors:
+# A + ConcreteVisitor2
+# B + ConcreteVisitor2
+</code></pre>
+
+                </div>
+                <!-- .entry-content -->
+                <div class="single-reward">
+                    <div class="reward-open">赏
+                        <div class="reward-main">
+                            <ul class="reward-row">
+                                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/a.png"></li>
+                                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/w.png"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; width: 100%" class="social-share share-mobile"
+                     data-disabled="diandian, tencent"></div>
+                <footer class="post-footer">
+                    <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+                                                   target="_blank" rel="nofollow"><i class="fa fa-creative-commons"
+                                                                                     aria-hidden="true"></i>
+                            知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+                    <div class="post-tags">
+                    </div>
+                    <div class="post-share">
+                        <div class="social-share sharehidden share-component"></div>
+                        <i class="iconfont show-share icon-forward"></i>
+                    </div>
+                </footer><!-- .entry-footer -->
+            </article>
+            <!-- #post-## -->
+            <div class="toc" style="background: none;"></div>
+            <section class="post-squares nextprev">
+                
+                    
+                <div class="post-nepre half previous">
+                    
+                        <a href="/2020/12/10/Python多线程/" rel="prev">
+                            <div class="background">
+                                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                     data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/163.jpg"
+                                     style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                     onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/163.jpg">
+                            </div>
+                            <span class="label">
+              Previous Post</span>
+                            <div class="info">
+                                <h3>
+                                    PySimpleGUI演示多线程</h3>
+                                <hr>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    
+                        
+                    <div class="post-nepre half next">
+                        
+                            <a href="/2020/12/01/Python设计模式（结构型模式）/" rel="next">
+                                <div class="background">
+                                    <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                         data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/33.jpg"
+                                         style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                         onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/33.jpg">
+                                </div>
+                                <span class="label">
+              Next Post</span>
+                                <div class="info">
+                                    <h3>
+                                        Python实现设计模式(结构型模式)</h3>
+                                    <hr>
+                                </div>
+                            </a>
+                        </div>
+                        
+            </section>
+            
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz",
+        appKey: "GieWKHddp2zS74VdyalPK69u",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+            <section class="author-profile">
+                <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+                    <a href="https://github.com/Zranshi" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg"
+                                                                                   itemprop="image"
+                                                                                   alt="ranshi" height="70"
+                                                                                   width="70"></a>
+                    <div class="meta">
+                        <span class="title">Author</span>
+                        <h3 itemprop="name">
+                            <a href="https://github.com/Zranshi" itemprop="url" rel="author">ranshi</a>
+                        </h3>
+                    </div>
+                </div>
+                <hr>
+                <p><i class="iconfont icon-write"></i>成为更好的自己，才能守护最好的你</p>
+            </section>
+        </main><!-- #main -->
+    </div><!-- #primary -->
+</div>
+
+
+
+        </div>
+        <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                // PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+            },
+            ROOT_URL: '/',
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+        <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Ranshi<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="site-info">
+        <div class="footertext">
+            <div class="img-preload">
+                <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+                <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+            </div>
+            <p style="color: #666666;">&copy 2018</p>
+        </div>
+        <div class="footer-device">
+            <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/Zranshi" target="_blank"
+                                               style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i
+                    class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a
+                    href="https://zranshi.github.io/" target="_blank"
+                    style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Renaissance.の</a>&<a
+                    href="https://zranshi.github.io/" target="_blank"
+                    style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Ranshi</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+                </br>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+            </p>
+        </div>
+    </div><!-- .site-info -->
+</footer>
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        var Poi = {
+            "pjax": "1",
+            "movies": {"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2/Unbroken.mp4", "name": "mad.flv", "live": "close"},
+            "windowheight": "fixed",
+            "codelamp": "close",
+            "ajaxurl": "",
+            "order": "asc",
+            "formpostion": "bottom"
+        };
+    } else {
+        var Poi = {
+            "pjax": "1",
+            "movies": {"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2/Unbroken.mp4", "name": "mad.flv", "live": "open"},
+            "windowheight": "auto",
+            "codelamp": "close",
+            "ajaxurl": "",
+            "order": "asc",
+            "formpostion": "bottom"
+        };
+    }
+    /* ]]> */
+
+</script>
+<script>
+    $(document).ready(function () {
+        if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+            if ($(".pattern-center").length > 0) { //有图的情况
+                tocbot.init({
+                    // Where to render the table of contents.
+                    tocSelector: '.toc', // 放置目录的容器
+                    // Where to grab the headings to build the table of contents.
+                    contentSelector: '.entry-content', // 正文内容所在
+                    // Which headings to grab inside of the contentSelector element.
+                    scrollSmooth: true,
+                    headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+                    headingsOffset: -400,
+                    scrollSmoothOffset: -85
+                });
+            } else {
+                tocbot.init({
+                    // Where to render the table of contents.
+                    tocSelector: '.toc', // 放置目录的容器
+                    // Where to grab the headings to build the table of contents.
+                    contentSelector: '.entry-content', // 正文内容所在
+                    // Which headings to grab inside of the contentSelector element.
+                    scrollSmooth: true,
+                    headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+                    headingsOffset: -85,
+                    scrollSmoothOffset: -85
+                });
+            }
+            var offsetTop = $('.toc').offset().top - 95;
+            window.onscroll = function () {
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+                if (scrollTop >= offsetTop) {
+                    $('.toc').addClass('toc-fixed');
+                } else {
+                    $('.toc').removeClass('toc-fixed');
+                }
+            }
+        }
+    });
+</script>
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/5/2020 12:38:00");//在此处修改你的建站时间
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+
+    setInterval("createtime()", 250);
+</script>
+
+        <div class="openNav no-select" style="height: 50px;">
+            <div class="iconflat no-select" style="width: 50px; height: 50px;">
+                <div class="icon"></div>
+            </div>
+            <div class="site-branding search-form-submit">
+                <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+            </div>
+        </div>
+
+        <!--浏览器搞笑标题-->
+        <script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
+        <!--动态线条背景-->
+        <script type="text/javascript" color="220,220,220" opacity='1.0' zIndex="-1" count="100"
+            src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+        </script>
+
+    </section>
+    <div id="mo-nav" class="">
+    <div class="m-avatar">
+        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/avatar.jpg">
+    </div>
+    <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Renaissance.のRanshi</p>
+    <p style="text-align: center; word-spacing: 20px;">
+        
+            
+                <a href="https://github.com/Zranshi" class="fa fa-github" target="_blank"
+                   style="color: #333; margin-left:20px"></a>
+            
+        
+    </p>
+    <ul id="menu-new-1" class="menu">
+        
+            <li>
+                <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/categories/技术/">
+                                    <i class="fa fa-code" aria-hidden="true"></i>
+                                    技术
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/生活/">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                    生活
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/资源/">
+                                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                    资源
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/随想/">
+                                    <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                    随想
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/转载/">
+                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                    转载
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/tags/悦读/">
+                                    <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                                    书单
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/bangumi/">
+                                    <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                                    番组
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/music/">
+                                    <i class="fa fa-headphones" aria-hidden="true"></i>
+                                    歌单
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/tags/图集/">
+                                    <i class="fa fa-photo" aria-hidden="true"></i>
+                                    图集
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/about/">
+                                    <i class="fa fa-meetup" aria-hidden="true"></i>
+                                    我？
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/theme-sakura/">
+                                    <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                                    主题
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/lab/">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                    Lab
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="/client/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+            客户端
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+                </a>
+                
+            </li>
+        
+    </ul>
+    <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i
+            class="fa fa-chevron-up" aria-hidden="true"></i></button>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
