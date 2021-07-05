@@ -461,10 +461,10 @@
                 <!--<div class="toc-entry-content"> 套嵌目录使用（主要为了支援评论）-->
                 
                 <div class="entry-content">
-                    <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p>（1）平衡二叉树是一个空树或者它的左右子树的高度差的绝对值不超过1，并且左右子树都是平衡二叉树。</p>
+                    <h1 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h1><p>（1）平衡二叉树是一个空树或者它的左右子树的高度差的绝对值不超过1，并且左右子树都是平衡二叉树。</p>
 <p>（2）平均查找时间是O(log2(n)) ，因为平衡二叉树是一种特别的二叉搜索树，每次都会根据当前节点，查找大于或者小于当前节点的子树。而二叉树是平衡的，也就 说明不会出现退化成单链表的情况。因此平均搜索效率提升至O(log2(n))</p>
-<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p>选择堆排序，因为堆排序能够在O(log2(n))每次挑选出最大的值，因此不需要将1000个数值全部排序即可完成要求。而快速排序、基数排序和归并排序没有办法在没有 完全排序整个数组前完成要求，因此这些排序的时间复杂度是O(n*log2(n))</p>
-<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><pre><code class="python">class ListNode(object):
+<h1 id="选择最大的前10个树"><a href="#选择最大的前10个树" class="headerlink" title="选择最大的前10个树"></a>选择最大的前10个树</h1><p>选择堆排序，因为堆排序能够在O(log2(n))每次挑选出最大的值，因此不需要将1000个数值全部排序即可完成要求。而快速排序、基数排序和归并排序没有办法在没有 完全排序整个数组前完成要求，因此这些排序的时间复杂度是O(n*log2(n))</p>
+<h1 id="删除链表中相同的节点"><a href="#删除链表中相同的节点" class="headerlink" title="删除链表中相同的节点"></a>删除链表中相同的节点</h1><pre><code class="python">class ListNode(object):
 def __init__(self, val:int, next=None):
     self.val = val
     self.next = next
@@ -492,7 +492,7 @@ def remove_same(self):
                 break
 
 </code></pre>
-<h2 id="4"><a href="#4" class="headerlink" title="4"></a>4</h2><pre><code class="py">class Triple:
+<h1 id="三元表顺序表转置矩阵，快速转置算法"><a href="#三元表顺序表转置矩阵，快速转置算法" class="headerlink" title="三元表顺序表转置矩阵，快速转置算法"></a>三元表顺序表转置矩阵，快速转置算法</h1><pre><code class="py">class Triple:
     def __init__(self, i: int, j: int, value: int):
         self.i = i
         self.j = j
@@ -526,23 +526,8 @@ class TSMatrix:
             t_l[pot[item.i - 1] - 1] = item
             pot[item.i - 1] += 1
         self.triple_list = t_l
-
-
-if __name__ == &#39;__main__&#39;:
-    ts = [Triple(1, 1, 12),
-          Triple(1, 3, 13),
-          Triple(2, 4, 15),
-          Triple(3, 1, 35),
-          Triple(3, 2, 64),
-          Triple(3, 4, 34),
-          Triple(4, 1, 75)]
-    t = TSMatrix(3, 4, 7, ts)
-    print(t)
-    t.fast_transpose()
-    print(t)
-
 </code></pre>
-<h2 id="5"><a href="#5" class="headerlink" title="5"></a>5</h2><pre><code class="py">count = 0
+<h1 id="全排列"><a href="#全排列" class="headerlink" title="全排列"></a>全排列</h1><pre><code class="py">count = 0
 
 def g_permutations(n: list, begin: int = 0, end: int = None):
     global count
@@ -595,9 +580,29 @@ g_permutations(arr)
             <section class="post-squares nextprev">
                 
                     
+                <div class="post-nepre half previous">
+                    
+                        <a href="/2021/07/04/苏州大学2006年试题/" rel="prev">
+                            <div class="background">
+                                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                     data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/54514426_p0.jpg"
+                                     style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                     onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/54514426_p0.jpg">
+                            </div>
+                            <span class="label">
+              Previous Post</span>
+                            <div class="info">
+                                <h3>
+                                    苏州大学2006年872试题</h3>
+                                <hr>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    
                         
-                        <div class="post-nepre full next">
-                            
+                    <div class="post-nepre half next">
+                        
                             <a href="/2021/06/01/软件需求分析知识点汇总/" rel="next">
                                 <div class="background">
                                     <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
