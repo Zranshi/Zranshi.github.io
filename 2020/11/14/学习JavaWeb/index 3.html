@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+    <title itemprop="name">
+        学习JavaWeb |
+        
+        Ranshi</title>
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/css/lib.min.css" media="all">
+    <link rel="stylesheet" href="/css/font.css" media="all">
+    <link rel="stylesheet" href="/css/insight.css" media="all">
+    <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+    <link rel="stylesheet" href="/css/zoom.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+    <!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+    " type="text/css" media="all"> -->
+    <script>
+        /*Initial Variables*/
+        var mashiro_option = new Object();
+        var mashiro_global = new Object();
+        mashiro_option.NProgressON = true;
+        /*
+         * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+         * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+         */
+        mashiro_option.email_domain = "";
+        mashiro_option.email_name = "";
+        mashiro_option.cookie_version_control = "";
+        mashiro_option.qzone_autocomplete = false;
+        mashiro_option.site_name = "Renaissance.のRanshi";
+        mashiro_option.author_name = "Ranshi";
+        mashiro_option.site_url = "";
+        mashiro_option.v_appId = "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz";
+        mashiro_option.v_appKey = "GieWKHddp2zS74VdyalPK69u";
+        mashiro_option.mathjax = "0";
+        mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/";
+        mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+        // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+        // mashiro_option.float_player_on = true;
+
+        /*End of Initial Variables*/
+    </script>
+    <script type="text/javascript">
+        var bg = "https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg2.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg3.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg7.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg8.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg9.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg6.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg12.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg11.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg10.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg5.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.42/2020.12.16/4.jpg,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg4.jpg.webp".split(",");
+        var bgindex = Math.floor(Math.random() * bg.length);
+        if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+            alert('朋友，IE浏览器未适配哦~');
+        }
+    </script>
+    <style type="text/css">
+        .hljs-ln {
+            border-collapse: collapse
+        }
+
+        .hljs-ln td {
+            padding: 0
+        }
+
+        .hljs-ln-n:before {
+            content: attr(data-line-number)
+        }
+    </style>
+    <style type="text/css">.site-top .lower nav {
+            display: block !important;
+        }
+
+        .author-profile i, .post-like a, .post-share .show-share, .sub-text, .we-info a, span.sitename, .post-more i:hover, #pagination a:hover, .post-content a:hover, .float-content i:hover {
+            color: #FE9600
+        }
+
+        .feature i, .download, .navigator i:hover, .links ul li:before, .ar-time i, span.ar-circle, .object, .comment .comment-reply-link, .siren-checkbox-radio:checked + .siren-checkbox-radioInput:after {
+            background: #FE9600
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FE9600
+        }
+
+        .download, .navigator i:hover, .link-title, .links ul li:hover, #pagination a:hover, .comment-respond input[type='submit']:hover {
+            border-color: #FE9600
+        }
+
+        .entry-content a:hover, .site-info a:hover, .comment h4 a, #comments-navi a.prev, #comments-navi a.next, .comment h4 a:hover, .site-top ul li a:hover, .entry-title a:hover, #archives-temp h3, span.page-numbers.current, .sorry li a:hover, .site-title a:hover, i.iconfont.js-toggle-search.iconsearch:hover, .comment-respond input[type='submit']:hover {
+            color: #FE9600
+        }
+
+        .comments .comments-main {
+            display: block !important;
+        }
+
+        .comments .comments-hidden {
+            display: none !important;
+        }
+
+        background-position:center center
+
+        ;
+        background-attachment:inherit
+
+        ;
+        }
+    </style>
+</head>
+</html>
+
+<body
+    class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+    <div class="scrollbar" id="bar">
+    </div>
+    <a href="#" class="cd-top faa-float animated"></a>
+    <section id="main-container">
+        <div class="headertop filter-dot">
+    <div id="banner_wave_1"></div>
+    <div id="banner_wave_2"></div>
+    <figure id="centerbg" class="centerbg">
+        <div class="focusinfo no-select">
+            <div class="header-tou">
+                <a href="">
+                    <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/avatar.jpg">
+                </a>
+            </div>
+            <div class="header-info">
+                <p>成为更好的自己，才能守护最好的你</p>
+                <div class="top-social_v2">
+                    <li id="bg-pre">
+                        <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+                    </li>
+                    
+                        
+                            
+                                <li>
+                                    <a href="https://github.com/Zranshi" target="_blank" class="social-github"
+                                       title="github">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/github.png">
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="https://music.163.com/#/user/home?id=319231686" target="_blank" class="social-github"
+                                       title="wangyiyun">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/wangyiyun.png">
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="https://www.zhihu.com/people/ran-shi-2" target="_blank" class="social-github"
+                                       title="zhihu">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/zhihu.png">
+                                    </a>
+                                </li>
+                            
+                        
+                    
+                    <li id="bg-next">
+                        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+                    </li>
+                </div>
+            </div>
+        </div>
+    </figure>
+    <div id="video-container" style="">
+        <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+        </video>
+        <div id="video-btn" class="loadvideo videolive">
+        </div>
+        <div id="video-add">
+        </div>
+        <div class="video-stu">
+        </div>
+    </div>
+    <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+    </div>
+</div>
+
+        <div id="page" class="site wrapper">
+            <header class="site-header no-select gizle sabit" role="banner">
+    <div class="site-top">
+        <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">Renaissance.の</span>
+            <span class="shironeko">Ranshi</span>
+          </a>
+        </span>
+      </span>
+        </div>
+        <div class="searchbox search-form-submit">
+            <i class="iconfont js-toggle-search iconsearch icon-search">
+            </i>
+        </div>
+        <div id="show-nav" class="showNav mobile-fit">
+            <div class="line line1">
+            </div>
+            <div class="line line2">
+            </div>
+            <div class="line line3">
+            </div>
+        </div>
+        <div class="lower-cantiner">
+            <div class="lower">
+                <nav class="mobile-fit-control hide">
+                    <ul id="menu-new" class="menu">
+                        
+                            <li>
+                                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/categories/技术/">
+                                                    <i class="fa fa-code"
+                                                       aria-hidden="true"></i>
+                                                    技术
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/生活/">
+                                                    <i class="fa fa-file-text-o"
+                                                       aria-hidden="true"></i>
+                                                    生活
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/资源/">
+                                                    <i class="fa fa-cloud-download"
+                                                       aria-hidden="true"></i>
+                                                    资源
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/随想/">
+                                                    <i class="fa fa-commenting-o"
+                                                       aria-hidden="true"></i>
+                                                    随想
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/转载/">
+                                                    <i class="fa fa-book"
+                                                       aria-hidden="true"></i>
+                                                    转载
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/tags/悦读/">
+                                                    <i class="fa fa-th-list faa-bounce"
+                                                       aria-hidden="true"></i>
+                                                    书单
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/bangumi/">
+                                                    <i class="fa fa-film faa-vertical"
+                                                       aria-hidden="true"></i>
+                                                    番组
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/music/">
+                                                    <i class="fa fa-headphones"
+                                                       aria-hidden="true"></i>
+                                                    歌单
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/tags/图集/">
+                                                    <i class="fa fa-photo"
+                                                       aria-hidden="true"></i>
+                                                    图集
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about/">
+                                                    <i class="fa fa-meetup"
+                                                       aria-hidden="true"></i>
+                                                    我？
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/theme-sakura/">
+                                                    <i class="fa iconfont icon-sakura"
+                                                       aria-hidden="true"></i>
+                                                    主题
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/lab/">
+                                                    <i class="fa fa-cogs"
+                                                       aria-hidden="true"></i>
+                                                    Lab
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/client/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+                    客户端
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+    <div class="pattern-center single-center">
+        <!-- 有配图默认渲染第一张 -->
+        <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/19.jpg);"
+             src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/19.jpg">
+        </div>
+        <header class="pattern-header single-header">
+            <h1 class="entry-title">
+                学习JavaWeb</h1>
+            <p class="entry-census">
+        <span>
+          <a href="https://github.com/Zranshi">
+            <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg">
+          </a>
+        </span>
+                <span>
+          <a href="https://github.com/Zranshi">ranshi</a>
+        </span>
+                <span class="bull">
+        ·</span>
+                2020-11-14<span class="bull">
+        ·</span>
+                <span id="busuanzi_value_page_pv"></span>次阅读</p>
+        </header>
+    </div>
+
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main" role="main">
+            <article id="post-1"
+                     class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+                <div class="toc"></div>
+                <!--<div class="toc-entry-content"> 套嵌目录使用（主要为了支援评论）-->
+                
+                <div class="entry-content">
+                    <h1 id="学习Java-web"><a href="#学习Java-web" class="headerlink" title="学习Java web"></a>学习Java web</h1><h2 id="Tomcat（web服务器软件）"><a href="#Tomcat（web服务器软件）" class="headerlink" title="Tomcat（web服务器软件）"></a>Tomcat（web服务器软件）</h2><ol>
+<li>下载：<a href="http://tomcat.apache.org/" target="_blank" rel="noopener">http://tomcat.apache.org/</a></li>
+<li>安装：解压压缩包即可。<ul>
+<li>注意：安装目录中不能有空格和中文</li>
+</ul>
+</li>
+<li>卸载：删除文件夹即可</li>
+<li>启动：<ul>
+<li>双击文件：startup.bat</li>
+<li>访问：浏览器输入：<code>http://localhost:8080 （默认，可以修改）</code></li>
+<li>访问：浏览器输入：<code>http://别人的ip:8080 （访问别人）</code></li>
+<li>可能遇到的问题：<ol>
+<li>黑屏一闪而过：<ul>
+<li>原因：没有正确配置JAVA_HOME环境变量</li>
+<li>解决方法：正确配置JAVA_HOME环境变量</li>
+</ul>
+</li>
+<li>启动报错：<ol>
+<li>暴力：找到占用的端口号，并找到对应的进程，杀死该进程<br> <code>netstat -ano</code></li>
+<li>温柔：修改自身的端口号<br> <code>conf/server.xml</code><pre><code> &lt;Connector port=&quot;80&quot; protocol=&quot;HTTP/1.1&quot;
+ connectionTimeout=&quot;20000&quot;
+ redirectPort=&quot;8443&quot; /&gt;
+</code></pre><ul>
+<li>一般将tomcat的默认端口号改为80，80端口号是http协议的默认端口号。<br>  好处：在访问时，就不用输入端口号</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>关闭：<ol>
+<li>正常关闭：<ul>
+<li>bin/shutdown.bat</li>
+<li>ctrl+c</li>
+</ul>
+</li>
+<li>强制关闭：<ul>
+<li>点击启动窗口的“x”</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>配置：<ul>
+<li>部署项目的方式：<ol>
+<li>直接将项目放到webapps目录下即可。<ul>
+<li>/hello：项目的访问路径–&gt;虚拟目录</li>
+<li>简化部署：将项目打成一个war包，再将war包放置到webapps目录下。<br>  war包会自动解压缩，并且删除war包后，项目文件夹会自动删除。</li>
+</ul>
+</li>
+<li>配置conf/server.xml文件<ul>
+<li>在<host>标签体中配置<br>  <code>&lt;Context docBase=&quot;文件路径&quot; path=&quot;虚拟目录&quot;&gt;</code></host></li>
+</ul>
+</li>
+<li>在conf/Catalina/localhost创建任意名称的xml文件。在文件里面编写<br><code>&lt;Context docBase=&quot;文件路径&quot; /&gt;</code><ul>
+<li>虚拟目录：xml文件的名称</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="学习servlet-server-applet"><a href="#学习servlet-server-applet" class="headerlink" title="学习servlet (server applet)"></a>学习servlet (server applet)</h2><h3 id="Servlet基础"><a href="#Servlet基础" class="headerlink" title="Servlet基础"></a>Servlet基础</h3><ul>
+<li>概念：运行在服务器端的小程序<ul>
+<li>servlet就是一个接口，定义了Java类被浏览器访问到（tomcat识别）的规则。</li>
+<li>将来我们自定义一个类，实现servlet接口，复写方法。</li>
+</ul>
+</li>
+<li>快速入门<ul>
+<li>创建一个javaEE项目</li>
+<li>定义一个类，实现servlet接口。<br>  <code>public class servletDemo1 implements Servlet</code></li>
+<li>实现接口中的抽象方法</li>
+<li>配置servlet<pre><code>&lt;!--配置servlet--&gt;
+&lt;servlet&gt;
+  &lt;servlet-name&gt;demo1&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;web.servletDemo1&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;demo1&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/demo1&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre></li>
+</ul>
+</li>
+<li>执行原理：<ul>
+<li>当服务器接收到客户端浏览器的请求后，会解析请求URL路径，获取访问的Servlet的资源路径</li>
+<li>查找web.xml文件，是否有对应的&lt;url-pattern>标签体内容。</li>
+<li>如果有，则在找到对应的&lt;servlet=class>全类名。</li>
+<li>tomcat会将字节码文件加载进内存，并且创建其对象</li>
+<li>调用其方法</li>
+</ul>
+</li>
+<li><p>Servlet中的生命周期方法：</p>
+<ul>
+<li>init()<ul>
+<li>初始化方法<br>在Servlet被创建时执行，只会执行一次。</li>
+<li>默认情况下，Servlet被访问时，Servlet被创建。</li>
+<li>可以指定Servlet的创建时期。<br>  1.第一次被访问时，创建<br>  <code>&lt;load-on-stratup&gt;</code>的值为负数<br>  2.在服务器启动时，创建<br>  <code>&lt;load-on-stratup&gt;</code>的值为正数</li>
+<li>Servlet的init方法，只执行一次，说明一个Servlet在内存中只存在一个对象，Servlet时单例的。<ul>
+<li>多个用户同时访问时，可能存在线程安全问题。</li>
+<li>解决方法：尽量不要在Servlet中定义成员变量。即使定义了成员变量也不要对其修改值。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>service()<ul>
+<li>提供服务的方法<br>每一次Servlet被访问时执行，执行多次。<ul>
+<li>每次访问Servlet时，service方法都被调用一次</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>destroy()<ul>
+<li>销毁方法<br>在服务器正在关闭时执行，执行一次。<ul>
+<li>Servlet被销毁时执行。服务器关闭时，Servlet被销毁。</li>
+<li>只有服务器正常关闭时，才会执行destroy方法。</li>
+<li>destroy方法在Servlet销毁之前执行。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ServletConfig()<ul>
+<li>获取ServletConfig对象<br>ServletConfig: servlet的配置对象</li>
+</ul>
+</li>
+<li>getServletInfo()<ul>
+<li>获取Servlet的一些信息：版本、作者。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Servlet3.0：</p>
+<ul>
+<li>好处：<ul>
+<li>支持注解配置，可以不需要web.xml了。</li>
+</ul>
+</li>
+<li>步骤：<br>  1.创建JavaEE项目，选择Servlet 3.0以上的版本<br>  2.定义一个类，实现Servlet接口<br>  3.复写方法<br>  4.在类上使用@WebServlet注解，进行配置<br>  <code>@WebServlet(&quot;资源路径&quot;)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="IDEA与tomcat的相关配置"><a href="#IDEA与tomcat的相关配置" class="headerlink" title="IDEA与tomcat的相关配置"></a>IDEA与tomcat的相关配置</h3><ol>
+<li>IDEA会为每一个tomcat部署的项目单独建立一份配置文件<ul>
+<li>查看控制台的log：<code>Using CATALINA_BASE:   &quot;C:\Users\78293\AppData\Local\JetBrains\IntelliJIdea2020.1\tomcat\Tomcat_8_5_59_ServletUp3_0&quot;</code></li>
+</ul>
+</li>
+<li>工作空间项目 和 tomcat部署的web项目<ul>
+<li>tomcat真正访问的是“tomcat部署的web项目”，“tomcat不是的web项目”对应着“工作空间项目” 的web目录下的所有资源</li>
+<li>WEB-INF目录下的资源不能被浏览器直接访问</li>
+</ul>
+</li>
+<li>断电调试：使用“小虫子”启动debug 启动</li>
+</ol>
+<h3 id="servlet体系结构"><a href="#servlet体系结构" class="headerlink" title="servlet体系结构"></a>servlet体系结构</h3><p>servlet – 接口<br>        |<br>GenericServlet – 抽象类<br>        |<br>HttpServlet – 抽象类</p>
+<ul>
+<li>GenericServlet : 将Servlet 接口中其它的方法做了默认空实现，只将service()方法作为抽象<ul>
+<li>将来定义Servlet类时，可以继承GernericServlet,实现service()方法即可。</li>
+</ul>
+</li>
+<li>HttpServlet： 对http协议的一种封装，简化操作<br>  1.定义类继承HttpServlet<br>  2.复写doGet/doPost两个方法</li>
+</ul>
+<h3 id="Servlet相关配置"><a href="#Servlet相关配置" class="headerlink" title="Servlet相关配置"></a>Servlet相关配置</h3><ul>
+<li>urlpartten: Servlet访问路径<br>  1.一个Servlet可以定义多个访问路径： webServlet({“/d4”,”/dd4”,”/ddd4”})<br>  2.路径的定义规则：<ul>
+<li>1./xxx<br>2./xxx/xxx 多层路径，目录结构<br>3.*.do</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h2><ul>
+<li>概念：Hyper Text Transfer Protocol(超文本传输协议)<ul>
+<li>传输协议：定义了，客户端于服务器端发送数据的格式</li>
+<li>特点：<br>  1.基于TCP/IP 的高级协议<br>  2.默认端口号是：80  <code>http://www.itcast.cn:80</code><br>  3.基于请求/响应模型的：一次请求对应一次响应<br>  4.无状态的协议：每次请求之间都相互独立，不能交互数据</li>
+<li>历史版本：<br>  1.0：每一次请求响应夺回建立新的连接<br>  1.1：复用连接</li>
+</ul>
+</li>
+<li><p>请求消息数据格式</p>
+<ol>
+<li>请求行<br> 请求方式 请求url 请求协议/版本<br> GET /login.html HTTP/1.1<ul>
+<li>请求方式：<br>  HTTP协议有7种请求方式，常用的有2种<br>  GET:<br>  1.请求参数在请求行中，在url后<br>  2.请求的url长度有限制<br>  3.不太安全<br>  POST:<br>  1.请求参数在请求体中<br>  2.请求的url长度没有限制<br>  3.相对安全 </li>
+</ul>
+</li>
+<li><p>请求头:客户端告诉服务器端的一些信息<br> 请求头名称： 请求头值：<br> 常见的请求头：</p>
+<ol>
+<li>User-Agent：浏览器告诉服务器，我访问你使用的浏览器的版本信息<br> 可以在服务器端获取该头文件信息，解决浏览器的兼容性问题</li>
+<li>Referer:<code>http://localhost/login.html</code><br> 告诉服务器，我（当前请求）从哪里来？<br> 作用：<br> 1.防盗链<br> 2.统计工作</li>
+</ol>
+</li>
+<li><p>请求空行<br> 空行，就是用于分隔POST请求的请求头和请求体的</p>
+</li>
+<li>请求体(正文)<br> 封装POST请求消息的请求参数的</li>
+</ol>
+</li>
+<li><p>访问消息数据模式</p>
+</li>
+</ul>
+
+                </div>
+                <!-- .entry-content -->
+                <div class="single-reward">
+                    <div class="reward-open">赏
+                        <div class="reward-main">
+                            <ul class="reward-row">
+                                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/a.png"></li>
+                                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/w.png"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; width: 100%" class="social-share share-mobile"
+                     data-disabled="diandian, tencent"></div>
+                <footer class="post-footer">
+                    <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+                                                   target="_blank" rel="nofollow"><i class="fa fa-creative-commons"
+                                                                                     aria-hidden="true"></i>
+                            知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+                    <div class="post-tags">
+                    </div>
+                    <div class="post-share">
+                        <div class="social-share sharehidden share-component"></div>
+                        <i class="iconfont show-share icon-forward"></i>
+                    </div>
+                </footer><!-- .entry-footer -->
+            </article>
+            <!-- #post-## -->
+            <div class="toc" style="background: none;"></div>
+            <section class="post-squares nextprev">
+                
+                    
+                <div class="post-nepre half previous">
+                    
+                        <a href="/2020/11/18/leetcode打卡/" rel="prev">
+                            <div class="background">
+                                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                     data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/17.jpg"
+                                     style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                     onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/17.jpg">
+                            </div>
+                            <span class="label">
+              Previous Post</span>
+                            <div class="info">
+                                <h3>
+                                    leetcode打卡</h3>
+                                <hr>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    
+                        
+                    <div class="post-nepre half next">
+                        
+                            <a href="/2020/11/11/每天一个电脑小知识/" rel="next">
+                                <div class="background">
+                                    <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                         data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/42.jpg"
+                                         style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                         onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.3/2020.11.08/42.jpg">
+                                </div>
+                                <span class="label">
+              Next Post</span>
+                                <div class="info">
+                                    <h3>
+                                        每天一个电脑小知识</h3>
+                                    <hr>
+                                </div>
+                            </a>
+                        </div>
+                        
+            </section>
+            
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz",
+        appKey: "GieWKHddp2zS74VdyalPK69u",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+            <section class="author-profile">
+                <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+                    <a href="https://github.com/Zranshi" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg"
+                                                                                   itemprop="image"
+                                                                                   alt="ranshi" height="70"
+                                                                                   width="70"></a>
+                    <div class="meta">
+                        <span class="title">Author</span>
+                        <h3 itemprop="name">
+                            <a href="https://github.com/Zranshi" itemprop="url" rel="author">ranshi</a>
+                        </h3>
+                    </div>
+                </div>
+                <hr>
+                <p><i class="iconfont icon-write"></i>成为更好的自己，才能守护最好的你</p>
+            </section>
+        </main><!-- #main -->
+    </div><!-- #primary -->
+</div>
+
+
+
+        </div>
+        <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                // PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+            },
+            ROOT_URL: '/',
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+        <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Ranshi<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="site-info">
+        <div class="footertext">
+            <div class="img-preload">
+                <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+                <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+            </div>
+            <p style="color: #666666;">&copy 2018</p>
+        </div>
+        <div class="footer-device">
+            <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/Zranshi" target="_blank"
+                                               style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i
+                    class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a
+                    href="https://zranshi.github.io/" target="_blank"
+                    style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Renaissance.の</a>&<a
+                    href="https://zranshi.github.io/" target="_blank"
+                    style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Ranshi</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+                </br>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+            </p>
+        </div>
+    </div><!-- .site-info -->
+</footer>
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        var Poi = {
+            "pjax": "1",
+            "movies": {"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2/Unbroken.mp4", "name": "mad.flv", "live": "close"},
+            "windowheight": "fixed",
+            "codelamp": "close",
+            "ajaxurl": "",
+            "order": "asc",
+            "formpostion": "bottom"
+        };
+    } else {
+        var Poi = {
+            "pjax": "1",
+            "movies": {"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2/Unbroken.mp4", "name": "mad.flv", "live": "open"},
+            "windowheight": "auto",
+            "codelamp": "close",
+            "ajaxurl": "",
+            "order": "asc",
+            "formpostion": "bottom"
+        };
+    }
+    /* ]]> */
+
+</script>
+<script>
+    $(document).ready(function () {
+        if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+            if ($(".pattern-center").length > 0) { //有图的情况
+                tocbot.init({
+                    // Where to render the table of contents.
+                    tocSelector: '.toc', // 放置目录的容器
+                    // Where to grab the headings to build the table of contents.
+                    contentSelector: '.entry-content', // 正文内容所在
+                    // Which headings to grab inside of the contentSelector element.
+                    scrollSmooth: true,
+                    headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+                    headingsOffset: -400,
+                    scrollSmoothOffset: -85
+                });
+            } else {
+                tocbot.init({
+                    // Where to render the table of contents.
+                    tocSelector: '.toc', // 放置目录的容器
+                    // Where to grab the headings to build the table of contents.
+                    contentSelector: '.entry-content', // 正文内容所在
+                    // Which headings to grab inside of the contentSelector element.
+                    scrollSmooth: true,
+                    headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+                    headingsOffset: -85,
+                    scrollSmoothOffset: -85
+                });
+            }
+            var offsetTop = $('.toc').offset().top - 95;
+            window.onscroll = function () {
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+                if (scrollTop >= offsetTop) {
+                    $('.toc').addClass('toc-fixed');
+                } else {
+                    $('.toc').removeClass('toc-fixed');
+                }
+            }
+        }
+    });
+</script>
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/5/2020 12:38:00");//在此处修改你的建站时间
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+
+    setInterval("createtime()", 250);
+</script>
+
+        <div class="openNav no-select" style="height: 50px;">
+            <div class="iconflat no-select" style="width: 50px; height: 50px;">
+                <div class="icon"></div>
+            </div>
+            <div class="site-branding search-form-submit">
+                <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+            </div>
+        </div>
+
+        <!--浏览器搞笑标题-->
+        <script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
+        <!--动态线条背景-->
+        <script type="text/javascript" color="220,220,220" opacity='1.0' zIndex="-1" count="100"
+            src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+        </script>
+
+    </section>
+    <div id="mo-nav" class="">
+    <div class="m-avatar">
+        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/avatar.jpg">
+    </div>
+    <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Renaissance.のRanshi</p>
+    <p style="text-align: center; word-spacing: 20px;">
+        
+            
+                <a href="https://github.com/Zranshi" class="fa fa-github" target="_blank"
+                   style="color: #333; margin-left:20px"></a>
+            
+        
+    </p>
+    <ul id="menu-new-1" class="menu">
+        
+            <li>
+                <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/categories/技术/">
+                                    <i class="fa fa-code" aria-hidden="true"></i>
+                                    技术
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/生活/">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                    生活
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/资源/">
+                                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                    资源
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/随想/">
+                                    <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                    随想
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/转载/">
+                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                    转载
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/tags/悦读/">
+                                    <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                                    书单
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/bangumi/">
+                                    <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                                    番组
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/music/">
+                                    <i class="fa fa-headphones" aria-hidden="true"></i>
+                                    歌单
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/tags/图集/">
+                                    <i class="fa fa-photo" aria-hidden="true"></i>
+                                    图集
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/about/">
+                                    <i class="fa fa-meetup" aria-hidden="true"></i>
+                                    我？
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/theme-sakura/">
+                                    <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                                    主题
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/lab/">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                    Lab
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="/client/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+            客户端
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+                </a>
+                
+            </li>
+        
+    </ul>
+    <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i
+            class="fa fa-chevron-up" aria-hidden="true"></i></button>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
