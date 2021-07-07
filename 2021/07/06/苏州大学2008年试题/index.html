@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     
     <title itemprop="name">
-        Tag: Go |
+        苏州大学2008年872试题 |
         
         Ranshi</title>
     
@@ -423,101 +423,189 @@
     </div>
 </header>
 
-        
+        <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
-<div class="pattern-center ">
-    <div class="pattern-attachment-img">
-        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="Go.img" class="lazyload" onerror="imgError(this,3)" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+
+    <div class="pattern-center single-center">
+        <!-- 有配图默认渲染第一张 -->
+        <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/54752205_p0.png);"
+             src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/54752205_p0.png">
+        </div>
+        <header class="pattern-header single-header">
+            <h1 class="entry-title">
+                苏州大学2008年872试题</h1>
+            <p class="entry-census">
+        <span>
+          <a href="https://github.com/Zranshi">
+            <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg">
+          </a>
+        </span>
+                <span>
+          <a href="https://github.com/Zranshi">Ranshi</a>
+        </span>
+                <span class="bull">
+        ·</span>
+                2021-7-6<span class="bull">
+        ·</span>
+                <span id="busuanzi_value_page_pv"></span>次阅读</p>
+        </header>
     </div>
-    <header class="pattern-header ">
-        <h1 class="cat-title">Go</h1>
-    </header>
-</div>
+
 <div id="content" class="site-content">
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
+            <article id="post-1"
+                     class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+                <div class="toc"></div>
+                <!--<div class="toc-entry-content"> 套嵌目录使用（主要为了支援评论）-->
+                
+                <div class="entry-content">
+                    <h1 id="名次解释"><a href="#名次解释" class="headerlink" title="名次解释"></a>名次解释</h1><h2 id="线索二叉树"><a href="#线索二叉树" class="headerlink" title="线索二叉树"></a>线索二叉树</h2><p>根据二叉树的前序、中序和后序的遍历顺序会形成一个遍历序列。线索二叉树就是利用二叉树中每个结点中没有使用到的指针来保存前驱结点和后继结点，从而形成一个棵线索二叉树。</p>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>堆是一种二叉树，它的父结点总是比它的两个子结点大/小，从而每次都可以在二叉树的根结点上获得堆的最大/小值。</p>
+<h2 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h2><p>邻接矩阵是一种用二维数组表示图的形式，邻接矩阵的横坐标和纵坐标分别表示图上的两个点，该坐标下的值表示两个点之间是否有边，一般值的大小也用来表示边的权值。</p>
+<h2 id="稳定排序"><a href="#稳定排序" class="headerlink" title="稳定排序"></a>稳定排序</h2><p>稳定排序是指一类排序算法中在排序前和排序后相同目标值的元素相对位次不发生改变。举例如按照元组的第一个元素排序列表[(2,4),(1,2),(1,3)]，则在排序完成后 (1,2)和(1,3)的相对位次不会发生改变。</p>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>析构函数是指一个对象被销毁时触发的函数。</p>
+<h1 id="前序中序确定二叉树"><a href="#前序中序确定二叉树" class="headerlink" title="前序中序确定二叉树"></a>前序中序确定二叉树</h1><p><img src="https://i.loli.net/2021/07/06/kZlXprVWhPftC3d.png" alt></p>
+<p>前序：ABDEHICFJKG<br>中序：DBHEIAJFKCG</p>
+<h1 id="括号匹配"><a href="#括号匹配" class="headerlink" title="括号匹配"></a>括号匹配</h1><pre><code class="py">def bracket_matching(string: str):
+    res = []
+    stack = []
+    pre = {&#39;(&#39;: 1, &#39;[&#39;: 2, &#39;{&#39;: 3}
+    post = {&#39;)&#39;: 1, &#39;]&#39;: 2, &#39;}&#39;: 3}
+    for i, ch in enumerate(string):
+        if ch in pre:
+            stack.append((ch, i))
+        if ch in post:
+            if post[ch] != pre[stack[-1][0]]:
+                return None
+            else:
+                res.append((stack[-1][1], i))
+                stack.pop()
+    return res if not stack else None
+</code></pre>
+<h1 id="图中每一结点存有至相邻结点的成都，试编写一算法求一结点到任一结点到最短路径以及长度"><a href="#图中每一结点存有至相邻结点的成都，试编写一算法求一结点到任一结点到最短路径以及长度" class="headerlink" title="图中每一结点存有至相邻结点的成都，试编写一算法求一结点到任一结点到最短路径以及长度"></a>图中每一结点存有至相邻结点的成都，试编写一算法求一结点到任一结点到最短路径以及长度</h1><p>看不懂题目，感觉是用的dijkstra，但是我连条件都看不懂。</p>
+<h1 id="编写shell排序算法"><a href="#编写shell排序算法" class="headerlink" title="编写shell排序算法"></a>编写shell排序算法</h1><pre><code class="py">def shell_sort(arr: List[int]):
+    length = len(arr)
+    for sub in range(length // 2, 0, -1):
+        for idx in range(0, length, sub):
+            min_idx = idx
+            for i in range(idx, length, sub):
+                if arr[i] &lt; arr[min_idx]:
+                    min_idx = i
+            arr[idx], arr[min_idx] = arr[min_idx], arr[idx]
+</code></pre>
+
+                </div>
+                <!-- .entry-content -->
+                <div class="single-reward">
+                    <div class="reward-open">赏
+                        <div class="reward-main">
+                            <ul class="reward-row">
+                                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/a.png"></li>
+                                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/w.png"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; width: 100%" class="social-share share-mobile"
+                     data-disabled="diandian, tencent"></div>
+                <footer class="post-footer">
+                    <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+                                                   target="_blank" rel="nofollow"><i class="fa fa-creative-commons"
+                                                                                     aria-hidden="true"></i>
+                            知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+                    <div class="post-tags">
+                    </div>
+                    <div class="post-share">
+                        <div class="social-share sharehidden share-component"></div>
+                        <i class="iconfont show-share icon-forward"></i>
+                    </div>
+                </footer><!-- .entry-footer -->
+            </article>
+            <!-- #post-## -->
+            <div class="toc" style="background: none;"></div>
+            <section class="post-squares nextprev">
+                
+                    
+                <div class="post-nepre half previous">
+                    
+                        <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/" rel="prev">
+                            <div class="background">
+                                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                     data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/57648299_p0.png"
+                                     style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                     onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/57648299_p0.png">
+                            </div>
+                            <span class="label">
+              Previous Post</span>
+                            <div class="info">
+                                <h3>
+                                    写一篇文章来吐槽Go语言的机制</h3>
+                                <hr>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    
+                        
+                    <div class="post-nepre half next">
+                        
+                            <a href="/2021/07/05/苏州大学2007年试题/" rel="next">
+                                <div class="background">
+                                    <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                         data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/51440495_p0.jpg"
+                                         style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                         onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/51440495_p0.jpg">
+                                </div>
+                                <span class="label">
+              Next Post</span>
+                                <div class="info">
+                                    <h3>
+                                        苏州大学2007年872试题</h3>
+                                    <hr>
+                                </div>
+                            </a>
+                        </div>
+                        
+            </section>
             
-  <!-- 首页默认取最最新文章集 -->
-  
-    <article class="post post-list" itemscope="" itemtype="https://schema.org/BlogPosting">
-    <div class="post-entry">
-        <div class="feature">
-            <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/">
-                <div class="overlay">
-                    <i class="iconfont icon-text">
-                    </i>
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz",
+        appKey: "GieWKHddp2zS74VdyalPK69u",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+            <section class="author-profile">
+                <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+                    <a href="https://github.com/Zranshi" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg"
+                                                                                   itemprop="image"
+                                                                                   alt="Ranshi" height="70"
+                                                                                   width="70"></a>
+                    <div class="meta">
+                        <span class="title">Author</span>
+                        <h3 itemprop="name">
+                            <a href="https://github.com/Zranshi" itemprop="url" rel="author">Ranshi</a>
+                        </h3>
+                    </div>
                 </div>
-                <img width="150" height="150" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/57648299_p0.png"
-                     class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
-            </a>
-        </div>
-        <h1 class="entry-title">
-            <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/">
-                写一篇文章来吐槽Go语言的机制</a>
-        </h1>
-        <div class="p-time">
-            <i class="iconfont icon-time">
-            </i>
-            2021-7-7</div>
-        <p>
-            Go的slice、map真的把我搞疯！</p>
-        <footer class="entry-footer">
-            <div class="post-more">
-                <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/">
-                    <i class="iconfont icon-caidan">
-                    </i>
-                </a>
-            </div>
-        </footer>
-    </div>
-    <hr>
-</article>
-
-  
-    <article class="post post-list" itemscope="" itemtype="https://schema.org/BlogPosting">
-    <div class="post-entry">
-        <div class="feature">
-            <a href="/2021/04/23/记录开发记账网页/">
-                <div class="overlay">
-                    <i class="iconfont icon-text">
-                    </i>
-                </div>
-                <img width="150" height="150" src="https://i.loli.net/2021/04/23/XbZASQLqIJEi6Pn.png"
-                     class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
-            </a>
-        </div>
-        <h1 class="entry-title">
-            <a href="/2021/04/23/记录开发记账网页/">
-                记录开发记账网页的流程</a>
-        </h1>
-        <div class="p-time">
-            <i class="iconfont icon-time">
-            </i>
-            2021-4-23</div>
-        <p>
-            记录开发记账网页的点点滴滴</p>
-        <footer class="entry-footer">
-            <div class="post-more">
-                <a href="/2021/04/23/记录开发记账网页/">
-                    <i class="iconfont icon-caidan">
-                    </i>
-                </a>
-            </div>
-        </footer>
-    </div>
-    <hr>
-</article>
-
-  
-
-
-            <div class="clearer">
-            </div>
-        </main>
-        <!--  -->
-        
-    </div>
+                <hr>
+                <p><i class="iconfont icon-write"></i>成为更好的自己，才能守护最好的你</p>
+            </section>
+        </main><!-- #main -->
+    </div><!-- #primary -->
 </div>
+
+
+
     </div>
     <div class="ins-search">
     <div class="ins-search-mask"></div>

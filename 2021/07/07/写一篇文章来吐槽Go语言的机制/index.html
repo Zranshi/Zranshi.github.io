@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     
     <title itemprop="name">
-        Tag: Go |
+        写一篇文章来吐槽Go语言的机制 |
         
         Ranshi</title>
     
@@ -423,101 +423,254 @@
     </div>
 </header>
 
-        
+        <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
-<div class="pattern-center ">
-    <div class="pattern-attachment-img">
-        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="Go.img" class="lazyload" onerror="imgError(this,3)" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+
+    <div class="pattern-center single-center">
+        <!-- 有配图默认渲染第一张 -->
+        <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/57648299_p0.png);"
+             src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/57648299_p0.png">
+        </div>
+        <header class="pattern-header single-header">
+            <h1 class="entry-title">
+                写一篇文章来吐槽Go语言的机制</h1>
+            <p class="entry-census">
+        <span>
+          <a href="https://github.com/Zranshi">
+            <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg">
+          </a>
+        </span>
+                <span>
+          <a href="https://github.com/Zranshi">Ranshi</a>
+        </span>
+                <span class="bull">
+        ·</span>
+                2021-7-7<span class="bull">
+        ·</span>
+                <span id="busuanzi_value_page_pv"></span>次阅读</p>
+        </header>
     </div>
-    <header class="pattern-header ">
-        <h1 class="cat-title">Go</h1>
-    </header>
-</div>
+
 <div id="content" class="site-content">
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
+            <article id="post-1"
+                     class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+                <div class="toc"></div>
+                <!--<div class="toc-entry-content"> 套嵌目录使用（主要为了支援评论）-->
+                
+                <div class="entry-content">
+                    <h1 id="吐槽Go语言的机制"><a href="#吐槽Go语言的机制" class="headerlink" title="吐槽Go语言的机制"></a>吐槽Go语言的机制</h1><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天突发奇想想用Go来写一写LeetCode困难题。因为平时感觉Go还是挺靠谱的（而且速度比Python快多了），比起Python的方便快捷，Go更给我一种我能完全掌握我在干嘛的感觉（现在看来这就是幻觉）。</p>
+<p>所以打开了今天的<a href="https://leetcode-cn.com/problems/bst-sequences-lcci/" target="_blank" rel="noopener">拦路虎</a></p>
+<h2 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h2><p>首先看到这个题，我发现结点的顺序有如下限制：</p>
+<ol>
+<li>父结点总是在子结点之前</li>
+<li>没了</li>
+</ol>
+<p>是的，没错，只有一个限制。那么问题就很简单了，就是从头结点开始遍历，每次将当前结点的子结点放入map中，从map中找到下一个结点，继续这个过程就可以找到所有的路径了。</p>
+<p>因此我发现可以使用回溯法，因此我使用递归实现。</p>
+<p>在编写中有几点需要注意的：</p>
+<ol>
+<li>子结点加入后，在函数完成时需要将其剔除，不然会影响到之后的递归。</li>
+<li>遍历到当前结点时，需要剔除该结点，在处理完后需要将其加入</li>
+</ol>
+<h2 id="题目解答"><a href="#题目解答" class="headerlink" title="题目解答"></a>题目解答</h2><p>想到这里，我随手写了一个低效率版本，并且十分合理地以低效率的时间和空间通过了该题。</p>
+<pre><code class="go">// 执行用时：28 ms, 在所有 Go 提交中击败了6.98%的用户
+// 内存消耗：14.1 MB, 在所有 Go 提交中击败了6.98%的用户
+
+func BSTSequences(root *TreeNode) [][]int {
+    if root == nil {
+        return append([][]int{}, []int{})
+    }
+    var (
+        res       [][]int
+        path      []int
+        dfs       func(idx *TreeNode, que map[*TreeNode]bool, path []int)
+        sliceCope func([]int) []int
+        mapCope   func(map[*TreeNode]bool) map[*TreeNode]bool
+    )
+    sliceCope = func(i []int) (res []int) {
+        for _, x := range i {
+            res = append(res, x)
+        }
+        return
+    }
+    mapCope = func(m map[*TreeNode]bool) map[*TreeNode]bool {
+        res := map[*TreeNode]bool{}
+        for k, v := range m {
+            res[k] = v
+        }
+        return res
+    }
+
+    que := map[*TreeNode]bool{root: true}
+    dfs = func(idx *TreeNode, que map[*TreeNode]bool, path []int) {
+        delete(que, idx)
+        path = append(path, idx.Val)
+        if idx.Left != nil {
+            que[idx.Left] = true
+        }
+        if idx.Right != nil {
+            que[idx.Right] = true
+        }
+        if len(que) == 0 {
+            res = append(res, path)
+        } else {
+            for key := range que {
+                newQue := mapCope(que)
+                newPath := sliceCope(path)
+                dfs(key, newQue, newPath)
+            }
+        }
+        return
+    }
+    dfs(root, que, path)
+    return res
+}
+</code></pre>
+<p>这我肯定不能满意，我发现了我在复制map和slice上花费了很多不应该的时间。因此我下定决心研究代码，结果问题就来了。</p>
+<ol>
+<li>Go 语言在遍历map的时候不是将其keys保存成一个数组，从而遍历它的。而是每次从map中去除一个key。这就导致了如果在遍历过程中修改了map，则会发生很多难以预料的事情。因此需要使用一个slice保存其key值，再遍历数组就可以保证能够顺利遍历了。</li>
+<li>然后在复制Slice的时候，已经习惯Python的原本想使用slice[:]从而获得一个副本。结果突然想起来Go的切片不同于Python，Python是生成一个新的列表，而Go这则是修改该slice的指针。在高效的同时也导致其…根本没有发生改变。</li>
+<li>最后使用copy也有一些坑点，在复制slice的时候，如果被覆盖的那个slice空间不够大，则无法成功复制，也就是说得先分配一定的大小的空间，才能使用copy函数。</li>
+</ol>
+<p>以下是修改后的代码（但是不得不说，Go是真的香），</p>
+<pre><code class="go">// 执行用时：12 ms, 在所有 Go 提交中击败了90.70%的用户
+// 内存消耗：6.9 MB, 在所有 Go 提交中击败了95.35%的用户
+func BSTSequences(root *TreeNode) [][]int {
+    if root == nil {
+        return append([][]int{}, []int{})
+    }
+    var (
+        res  [][]int
+        path []int
+        dfs  func(idx *TreeNode)
+    )
+    que := map[*TreeNode]bool{root: true}
+    dfs = func(idx *TreeNode) {
+        delete(que, idx)
+        path = append(path, idx.Val)
+        if idx.Left != nil {
+            que[idx.Left] = true
+            defer delete(que, idx.Left)
+        }
+        if idx.Right != nil {
+            que[idx.Right] = true
+            defer delete(que, idx.Right)
+        }
+        if len(que) == 0 {
+            newSlice := make([]int, len(path))
+            copy(newSlice, path)
+            res = append(res, newSlice)
+        } else {
+            st := make([]*TreeNode, 0, len(que))
+            for key := range que {
+                st = append(st, key)
+            }
+            for i := range st {
+                dfs(st[i])
+            }
+        }
+        que[idx] = true
+        path = path[:len(path)-1]
+        return
+    }
+    dfs(root)
+    return res
+}
+</code></pre>
+
+                </div>
+                <!-- .entry-content -->
+                <div class="single-reward">
+                    <div class="reward-open">赏
+                        <div class="reward-main">
+                            <ul class="reward-row">
+                                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/a.png"></li>
+                                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/w.png"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; width: 100%" class="social-share share-mobile"
+                     data-disabled="diandian, tencent"></div>
+                <footer class="post-footer">
+                    <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+                                                   target="_blank" rel="nofollow"><i class="fa fa-creative-commons"
+                                                                                     aria-hidden="true"></i>
+                            知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+                    <div class="post-tags">
+                    </div>
+                    <div class="post-share">
+                        <div class="social-share sharehidden share-component"></div>
+                        <i class="iconfont show-share icon-forward"></i>
+                    </div>
+                </footer><!-- .entry-footer -->
+            </article>
+            <!-- #post-## -->
+            <div class="toc" style="background: none;"></div>
+            <section class="post-squares nextprev">
+                
+                    
+                        
+                        <div class="post-nepre full next">
+                            
+                            <a href="/2021/07/06/苏州大学2008年试题/" rel="next">
+                                <div class="background">
+                                    <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                         data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/54752205_p0.png"
+                                         style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                         onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/54752205_p0.png">
+                                </div>
+                                <span class="label">
+              Next Post</span>
+                                <div class="info">
+                                    <h3>
+                                        苏州大学2008年872试题</h3>
+                                    <hr>
+                                </div>
+                            </a>
+                        </div>
+                        
+            </section>
             
-  <!-- 首页默认取最最新文章集 -->
-  
-    <article class="post post-list" itemscope="" itemtype="https://schema.org/BlogPosting">
-    <div class="post-entry">
-        <div class="feature">
-            <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/">
-                <div class="overlay">
-                    <i class="iconfont icon-text">
-                    </i>
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz",
+        appKey: "GieWKHddp2zS74VdyalPK69u",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+            <section class="author-profile">
+                <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+                    <a href="https://github.com/Zranshi" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/custom/avatar.jpg"
+                                                                                   itemprop="image"
+                                                                                   alt="Ranshi" height="70"
+                                                                                   width="70"></a>
+                    <div class="meta">
+                        <span class="title">Author</span>
+                        <h3 itemprop="name">
+                            <a href="https://github.com/Zranshi" itemprop="url" rel="author">Ranshi</a>
+                        </h3>
+                    </div>
                 </div>
-                <img width="150" height="150" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/57648299_p0.png"
-                     class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
-            </a>
-        </div>
-        <h1 class="entry-title">
-            <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/">
-                写一篇文章来吐槽Go语言的机制</a>
-        </h1>
-        <div class="p-time">
-            <i class="iconfont icon-time">
-            </i>
-            2021-7-7</div>
-        <p>
-            Go的slice、map真的把我搞疯！</p>
-        <footer class="entry-footer">
-            <div class="post-more">
-                <a href="/2021/07/07/写一篇文章来吐槽Go语言的机制/">
-                    <i class="iconfont icon-caidan">
-                    </i>
-                </a>
-            </div>
-        </footer>
-    </div>
-    <hr>
-</article>
-
-  
-    <article class="post post-list" itemscope="" itemtype="https://schema.org/BlogPosting">
-    <div class="post-entry">
-        <div class="feature">
-            <a href="/2021/04/23/记录开发记账网页/">
-                <div class="overlay">
-                    <i class="iconfont icon-text">
-                    </i>
-                </div>
-                <img width="150" height="150" src="https://i.loli.net/2021/04/23/XbZASQLqIJEi6Pn.png"
-                     class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
-            </a>
-        </div>
-        <h1 class="entry-title">
-            <a href="/2021/04/23/记录开发记账网页/">
-                记录开发记账网页的流程</a>
-        </h1>
-        <div class="p-time">
-            <i class="iconfont icon-time">
-            </i>
-            2021-4-23</div>
-        <p>
-            记录开发记账网页的点点滴滴</p>
-        <footer class="entry-footer">
-            <div class="post-more">
-                <a href="/2021/04/23/记录开发记账网页/">
-                    <i class="iconfont icon-caidan">
-                    </i>
-                </a>
-            </div>
-        </footer>
-    </div>
-    <hr>
-</article>
-
-  
-
-
-            <div class="clearer">
-            </div>
-        </main>
-        <!--  -->
-        
-    </div>
+                <hr>
+                <p><i class="iconfont icon-write"></i>成为更好的自己，才能守护最好的你</p>
+            </section>
+        </main><!-- #main -->
+    </div><!-- #primary -->
 </div>
+
+
+
     </div>
     <div class="ins-search">
     <div class="ins-search-mask"></div>
