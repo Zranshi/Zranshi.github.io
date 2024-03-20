@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+    <title itemprop="name">
+        实现常用数据结构(图)——图的基础概念 |
+        
+        Ranshi</title>
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/css/lib.min.css" media="all">
+    <link rel="stylesheet" href="/css/font.css" media="all">
+    <link rel="stylesheet" href="/css/insight.css" media="all">
+    <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+    <link rel="stylesheet" href="/css/zoom.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+    <!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+    " type="text/css" media="all"> -->
+    <script>
+        /*Initial Variables*/
+        var mashiro_option = new Object();
+        var mashiro_global = new Object();
+        mashiro_option.NProgressON = true;
+        /*
+         * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+         * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+         */
+        mashiro_option.email_domain = "";
+        mashiro_option.email_name = "";
+        mashiro_option.cookie_version_control = "";
+        mashiro_option.qzone_autocomplete = false;
+        mashiro_option.site_name = "B612 PlanetのRanshi";
+        mashiro_option.author_name = "Ranshi";
+        mashiro_option.site_url = "";
+        mashiro_option.v_appId = "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz";
+        mashiro_option.v_appKey = "GieWKHddp2zS74VdyalPK69u";
+        mashiro_option.mathjax = "0";
+        mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/";
+        mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+        // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+        // mashiro_option.float_player_on = true;
+
+        /*End of Initial Variables*/
+    </script>
+    <script type="text/javascript">
+        var bg = "https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/80438411_p0.png,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/89181465_p0.png,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/87706186_p0.jpg,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/89193760_p0.jpg,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/81943456_p0.jpg,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/2021.5.20/60006073_p0.jpg,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg8.jpg.webp,https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/cover/bg9.jpg.webp".split(",");
+        var bgindex = Math.floor(Math.random() * bg.length);
+        if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+            alert('朋友，IE浏览器未适配哦~');
+        }
+    </script>
+    <style type="text/css">
+        .hljs-ln {
+            border-collapse: collapse
+        }
+
+        .hljs-ln td {
+            padding: 0
+        }
+
+        .hljs-ln-n:before {
+            content: attr(data-line-number)
+        }
+    </style>
+    <style type="text/css">.site-top .lower nav {
+            display: block !important;
+        }
+
+        .author-profile i, .post-like a, .post-share .show-share, .sub-text, .we-info a, span.sitename, .post-more i:hover, #pagination a:hover, .post-content a:hover, .float-content i:hover {
+            color: #FE9600
+        }
+
+        .feature i, .download, .navigator i:hover, .links ul li:before, .ar-time i, span.ar-circle, .object, .comment .comment-reply-link, .siren-checkbox-radio:checked + .siren-checkbox-radioInput:after {
+            background: #FE9600
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FE9600
+        }
+
+        .download, .navigator i:hover, .link-title, .links ul li:hover, #pagination a:hover, .comment-respond input[type='submit']:hover {
+            border-color: #FE9600
+        }
+
+        .entry-content a:hover, .site-info a:hover, .comment h4 a, #comments-navi a.prev, #comments-navi a.next, .comment h4 a:hover, .site-top ul li a:hover, .entry-title a:hover, #archives-temp h3, span.page-numbers.current, .sorry li a:hover, .site-title a:hover, i.iconfont.js-toggle-search.iconsearch:hover, .comment-respond input[type='submit']:hover {
+            color: #FE9600
+        }
+
+        .comments .comments-main {
+            display: block !important;
+        }
+
+        .comments .comments-hidden {
+            display: none !important;
+        }
+
+        background-position:center center
+
+        ;
+        background-attachment:inherit
+
+        ;
+        }
+    </style>
+</head>
+</html>
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+<div class="scrollbar" id="bar">
+</div>
+<a href="#" class="cd-top faa-float animated"></a>
+<section id="main-container">
+    <div class="headertop filter-dim">
+    <div id="banner_wave_1"></div>
+    <div id="banner_wave_2"></div>
+    <figure id="centerbg" class="centerbg">
+        <div class="focusinfo no-select">
+            <div class="header-tou">
+                <a href="">
+                    <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/avatar.jpg">
+                </a>
+            </div>
+            <div class="header-info">
+                <p>正是你花费在玫瑰上的时间才使得你的玫瑰花珍贵无比</p>
+                <div class="top-social_v2">
+                    <li id="bg-pre">
+                        <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+                    </li>
+                    
+                        
+                            
+                                <li>
+                                    <a href="https://github.com/Zranshi" target="_blank" class="social-github"
+                                       title="github">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/github.png">
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="https://music.163.com/#/user/home?id=319231686" target="_blank" class="social-github"
+                                       title="wangyiyun">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/wangyiyun.png">
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="https://www.zhihu.com/people/ran-shi-2" target="_blank" class="social-github"
+                                       title="zhihu">
+                                        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/social/zhihu.png">
+                                    </a>
+                                </li>
+                            
+                        
+                    
+                    <li id="bg-next">
+                        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+                    </li>
+                </div>
+            </div>
+        </div>
+    </figure>
+    <div id="video-container" style="">
+        <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+        </video>
+        <div id="video-btn" class="loadvideo videolive">
+        </div>
+        <div id="video-add">
+        </div>
+        <div class="video-stu">
+        </div>
+    </div>
+    <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+    </div>
+</div>
+
+    <div id="page" class="site wrapper">
+        <header class="site-header no-select gizle sabit" role="banner">
+    <div class="site-top">
+        <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">B612 Planetの</span>
+            <span class="shironeko">Ranshi</span>
+          </a>
+        </span>
+      </span>
+        </div>
+        <div class="searchbox search-form-submit">
+            <i class="iconfont js-toggle-search iconsearch icon-search">
+            </i>
+        </div>
+        <div id="show-nav" class="showNav mobile-fit">
+            <div class="line line1">
+            </div>
+            <div class="line line2">
+            </div>
+            <div class="line line3">
+            </div>
+        </div>
+        <div class="lower-cantiner">
+            <div class="lower">
+                <nav class="mobile-fit-control hide">
+                    <ul id="menu-new" class="menu">
+                        
+                            <li>
+                                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/categories/技术/">
+                                                    <i class="fa fa-code"
+                                                       aria-hidden="true"></i>
+                                                    技术
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/生活/">
+                                                    <i class="fa fa-file-text-o"
+                                                       aria-hidden="true"></i>
+                                                    生活
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/资源/">
+                                                    <i class="fa fa-cloud-download"
+                                                       aria-hidden="true"></i>
+                                                    资源
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/随想/">
+                                                    <i class="fa fa-commenting-o"
+                                                       aria-hidden="true"></i>
+                                                    随想
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/转载/">
+                                                    <i class="fa fa-book"
+                                                       aria-hidden="true"></i>
+                                                    转载
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/tags/悦读/">
+                                                    <i class="fa fa-th-list faa-bounce"
+                                                       aria-hidden="true"></i>
+                                                    书单
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/bangumi/">
+                                                    <i class="fa fa-film faa-vertical"
+                                                       aria-hidden="true"></i>
+                                                    番组
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/music/">
+                                                    <i class="fa fa-headphones"
+                                                       aria-hidden="true"></i>
+                                                    歌单
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/tags/图集/">
+                                                    <i class="fa fa-photo"
+                                                       aria-hidden="true"></i>
+                                                    图集
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                                </a>
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about/">
+                                                    <i class="fa fa-meetup"
+                                                       aria-hidden="true"></i>
+                                                    我？
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/theme-sakura/">
+                                                    <i class="fa iconfont icon-sakura"
+                                                       aria-hidden="true"></i>
+                                                    主题
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/lab/">
+                                                    <i class="fa fa-cogs"
+                                                       aria-hidden="true"></i>
+                                                    Lab
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/services/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-wrench faa-spin" aria-hidden="true"></i>
+                    工具集
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                            <li>
+                                <a href="/client/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+                    客户端
+                  </span>
+                                </a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+    <div class="pattern-center single-center">
+        <!-- 有配图默认渲染第一张 -->
+        <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.43/2021.4.27/13461444_p0.png);"
+             src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg" data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.43/2021.4.27/13461444_p0.png">
+        </div>
+        <header class="pattern-header single-header">
+            <h1 class="entry-title">
+                实现常用数据结构(图)——图的基础概念</h1>
+            <p class="entry-census">
+        <span>
+          <a href="https://github.com/Zranshi">
+            <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/img/custom/avatar.jpg">
+          </a>
+        </span>
+                <span>
+          <a href="https://github.com/Zranshi">Ranshi</a>
+        </span>
+                <span class="bull">
+        ·</span>
+                2021-4-25<span class="bull">
+        ·</span>
+                <span id="busuanzi_value_page_pv"></span>次阅读</p>
+        </header>
+    </div>
+
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main" role="main">
+            <article id="post-1"
+                     class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+                <div class="toc"></div>
+                <!--<div class="toc-entry-content"> 套嵌目录使用（主要为了支援评论）-->
+                
+                <div class="entry-content">
+                    <h2 id="图的逻辑结构"><a href="#图的逻辑结构" class="headerlink" title="图的逻辑结构"></a>图的逻辑结构</h2><p><strong>1) 有向图和无向图</strong></p>
+<p>有向图: 若 E 是有向边(也称弧)的有限集合时，则图 G 为有向图。弧是顶点的有序对，记为&lt;v, w&gt;，其中 v,w 是顶点，v 称为弧尾，w 称为弧头，&lt;v, w&gt;称为从 v 到 w 的弧，也称 v 邻接到 w。</p>
+<p>无向图: 若 E 是无向边(简称边)的有限集合时，则图 G 为无向图。边是顶点的无序对，记为(v, w)或(w,v)。可以说 w 和 v 互为邻接点。边(v, w)依附于 w 和 v,或称边(v, w)和 v, w 相关联。</p>
+<p><img src="https://i.loli.net/2021/04/27/Gosmt4hMLanu5x1.png" alt></p>
+<p><strong>2) 简单图和多重图</strong></p>
+<p>一个图 G 如果满足:① 不存在重复边; ② 不存在顶点到自身的边，那么称图 G 为<strong>简单图</strong>。</p>
+<p>若图 G 中某两个顶点之间的边数大于 1 条，又允许顶点通过一条边和自身关联，则称图 G 为<strong>多重图</strong>。</p>
+<p><strong>3) 完全图</strong></p>
+<p>对于无向图，|E|的取值范围为 0 到 n(n -1)/2,有 n(n - 1)/2 条边的无向图称为<strong>完全图</strong>，在完全图中任意两个顶点之间都存在边。</p>
+<p>对于有向图，E1 的取值范围为 0 到 n(n-1),有 n(n -1)条弧的有向图称为<strong>有向完全图</strong>，在有向完全图中任意两个顶点之间都存在方向相反的两条弧。</p>
+<p><strong>4) 子图</strong></p>
+<p>设有两个图 G=(V, E)和 G’=(V’,E’)，若 V’是 V 的子集，且 E’是 E 的子集，则称 G’是 G 的<strong>子图</strong>。若有满足 V(G’)= V(G)的子图 G’，则称其为 G 的<strong>生成子图</strong>。</p>
+<p><strong>5) 连通、连通图和连通分量</strong></p>
+<p>在无向图中，若从顶点 v 到顶点 w 有路径存在，则称 v 和 w 是<strong>连通</strong>的。若图 G 中任意两个顶点都是连通的，则称图 G 为<strong>连通图</strong>，否则称为<strong>非连通图</strong>。无向图中的极大连通子图称为<strong>连通分量</strong>。</p>
+<p><strong>6) 强连通图和强连通分量</strong></p>
+<p>在有向图中，如果有一对顶点 v 和 w，从 v 到 w 和从 w 到 v 之间都有路径，则称这两个顶点是<strong>强连通</strong>的。若图中任何一对顶点都是强连通的，则称此图为<strong>强连通图</strong>。有向图中的极大强连通子图称为有向图的<strong>强连通分量</strong>。</p>
+<p><strong>7) 生成图、生成森林</strong></p>
+<p>连通图的<strong>生成树</strong>是包含图中全部顶点的一个极小连通子图。若图中顶点数为 n,则它的生成树含有 n-1 条边。包含图中全部顶点的极小连通子图，只有生成树满足这个极小条件，对生成树而言，若砍去它的一条边，则会变成非连通图，若加上一条边则会形成一个回路。</p>
+<p>在非连通图中，连通分量的生成树构成了非连通图的<strong>生成森林</strong>。</p>
+<p><strong>8) 度、入度和出度</strong></p>
+<p>在无向图中，顶点 v 的<strong>度</strong>是指依附于顶点 v 的边的条数，记为 TD(v)。</p>
+<p>在有向图中，顶点 v 的度分为<strong>入度</strong>和<strong>出度</strong>, <strong>入度</strong>是以顶点 v 为终点的有向边的数目,记为 ID(v);而<strong>出度</strong>是以顶点 v 为起点的有向边的数目，记为 OD(v)。</p>
+<p><strong>9) 边的权和网</strong></p>
+<p>在一个图中，每条边都可以标上具有某种含义的数值，该数值称为该边的<strong>权值</strong>。这种边上带有权值的图称为<strong>带权图</strong>，也称<strong>网</strong>。</p>
+<p><strong>10) 稠密图和习俗图</strong></p>
+<p>边数很少的图称为<strong>稀疏图</strong>，反之称为<strong>稠密图</strong>。稀疏和稠密本身是模糊的概念，稀疏图和稠密图常常是相对而言的。一般当图 G 满足|E| &lt; |V|*log|V|时，可以将 G 视为稀疏图。</p>
+<p><strong>11) 路径、路径长度和回路</strong></p>
+<p>顶点 Vp 到顶点 Vq，之间的一条路径是指顶点序列 Vp, Vi1, Vi2, Vi3,…, Vim, Vq，当然关联的边也可理解为路径的构成要素。路径上边的数目称为<strong>路径长度</strong>。第一个顶点和最后一个顶点相同的路径称为<strong>回路</strong>或<strong>环</strong>。若一个图有 n 个顶点，并且有大于 n-1 条边，则此图一定有<strong>环</strong>。</p>
+<p><strong>12) 简单路径和简单回路</strong></p>
+<p>在路径序列中，顶点不重复出现的路径称为<strong>简单路径</strong>。除第一个顶点和最后一个顶点外，其余顶点不重复出现的回路称为<strong>简单回路</strong>。</p>
+<p><strong>13) 距离</strong></p>
+<p>从顶点 u 出发到顶点 v 的最短路径若存在，则此路径的长度称为从 u 到 v 的<strong>距离</strong>。若从 u 到 v 根本不存在路径，则记该距离为无穷(∞)。</p>
+<p><strong>14) 有向树</strong></p>
+<p>一个顶点的入度为 0、其余顶点的入度均为 1 的有向图，称为有向树。</p>
+<hr>
+<h2 id="图的存储结构"><a href="#图的存储结构" class="headerlink" title="图的存储结构"></a>图的存储结构</h2><p>图一般用一下几种方法进行存储.</p>
+<h3 id="邻接矩阵法"><a href="#邻接矩阵法" class="headerlink" title="邻接矩阵法"></a>邻接矩阵法</h3><p><img src="https://i.loli.net/2021/04/28/OowhWZeXuIcJxSv.png" alt></p>
+<p>所谓邻接矩阵存储，是指用一个一维数组存储图中顶点的信息，用一个二维数组存储图中边的信息(即各顶点之间的邻接关系)，存储顶点之间邻接关系的二维数组称为邻接矩阵。</p>
+<pre><code class="Go">type Map struct {
+ NodeSize int
+ data     [][]int
+}
+
+func InitMap(n int) *Map {
+ var data [][]int
+ for i := 0; i &lt; n; i++ {
+  data = append(data, []int{})
+  for j := 0; j &lt; n; j++ {
+   data[i] = append(data[i], math.MaxInt32)
+  }
+ }
+ return &amp;Map{
+  NodeSize: n,
+  data:     data,
+ }
+}
+</code></pre>
+<h3 id="邻接表和逆邻接表"><a href="#邻接表和逆邻接表" class="headerlink" title="邻接表和逆邻接表"></a>邻接表和逆邻接表</h3><p><img src="https://i.loli.net/2021/04/28/JXorWn2NKbdk5aS.png" alt></p>
+<p><img src="https://i.loli.net/2021/04/28/fIRumdLz42N9coY.png" alt></p>
+<p>所谓邻接表，是指对图 G 中的每个顶点 Vi 建立一个单链表, 第 i 个单链表中的结点表示依附于顶点 Vi 的边(对于有向图则是以顶点 Vi 为尾的弧)，这个单链表就称为顶点 Vi 的<strong>边表</strong>(对于有向图则称为<strong>出边表</strong>)。边表的头指针和顶点的数据信息采用顺序存储 (称为顶点表), 所以在邻接表中存在两种结点: 顶点表结点和边表结点。</p>
+<pre><code class="Go">// VNode 边表结构
+type VNode struct {
+ cIdx int
+ next *VNode
+}
+
+// ArcNode 点结构
+type ArcNode struct {
+ data  int
+ first *VNode
+}
+
+// Map 图结构
+type Map struct {
+ NodeSize int
+ LineSize int
+ nodeList []ArcNode
+}
+
+func InitMap(n int) *Map {
+ var l []ArcNode
+ for i := 0; i &lt; n; i++ {
+  l = append(l, ArcNode{
+   data:  i,
+   first: nil,
+  })
+ }
+ return &amp;Map{
+  NodeSize: n,
+  LineSize: 0,
+  nodeList: l,
+ }
+}
+</code></pre>
+<h3 id="十字链表法"><a href="#十字链表法" class="headerlink" title="十字链表法"></a>十字链表法</h3><p><img src="https://i.loli.net/2021/04/28/zXvU2C1l6mAyqJk.png" alt></p>
+<p>十字链表是有向图的一种链式存储结构。在十字链表中,对应于有向图中的每条弧有一个结点，对应于每个顶点也有一个结点。这些结点的结构如下图所示。</p>
+<p><img src="https://i.loli.net/2021/04/28/N8IXq9VBOjEtz25.png" alt></p>
+<p>弧结点中有 5 个域: 尾域(tailvex)和头域(headvex)分别指示弧尾和弧头这两个顶点在图中的位置; 链域 nextIn 指向弧头相同的下一条弧;链域 nextOut 指向弧尾相同的下一条弧。这样，弧头相同的弧就在同一个链表上，弧尾相同的弧也在同一个链表上。</p>
+<pre><code class="Go">// VNode 弧结构
+type VNode struct {
+ start   int
+ end     int
+ nextIn  *VNode
+ nextOut *VNode
+}
+
+// ArcNode 点结构
+type ArcNode struct {
+ data     int
+ firstIn  *VNode
+ firstOut *VNode
+}
+
+// Map 图结构
+type Map struct {
+ LineSize int
+ NodeSize int
+ NodeList []ArcNode
+}
+
+func InitMap(n int) *Map {
+ var l []ArcNode
+ for i := 0; i &lt; n; i++ {
+  l = append(l, ArcNode{
+   data:     i,
+   firstIn:  nil,
+   firstOut: nil,
+  })
+ }
+ return &amp;Map{
+  LineSize: 0,
+  NodeSize: n,
+  NodeList: l,
+ }
+}
+</code></pre>
+<h3 id="邻接多重表"><a href="#邻接多重表" class="headerlink" title="邻接多重表"></a>邻接多重表</h3><p><img src="https://i.loli.net/2021/04/28/egkV1wYM9i2NF4X.png" alt></p>
+<p>邻接多重表是无向图的另一种链式存储结构。</p>
+<p>在邻接表中，容易求得顶点和边的各种信息，但在邻接表中求两个顶点之间是否存在边而对边执行删除等操作时，需要分别在两个顶点的边表中遍历，效率较低。</p>
+<p>在邻接多重表中, 所有依附于同一顶点的边串联在同一链表中, 由于每条边依附于两个顶点 , 因此每个边结点同时链接在两个链表中。对无向图而言，其邻接多重表和邻接表的差别仅在于，同一条边在邻接表中用两个结点表示，而在邻接多重表中只有一个结点。</p>
+<pre><code class="Go">// VNode 边结构
+type VNode struct {
+ i     int
+ iNext *VNode
+ j     int
+ jNext *VNode
+}
+
+// ArcNode 点结构
+type ArcNode struct {
+ data  int
+ first *VNode
+}
+
+// Map 图结构
+type Map struct {
+ NodeSize int
+ LineSize int
+ NodeList []ArcNode
+}
+
+func InitMap(n int) *Map {
+ var l []ArcNode
+ for i := 0; i &lt; n; i++ {
+  l = append(l, ArcNode{
+   data:  i,
+   first: nil,
+  })
+ }
+ return &amp;Map{
+  NodeSize: n,
+  LineSize: 0,
+  NodeList: l,
+ }
+}
+</code></pre>
+
+                </div>
+                <!-- .entry-content -->
+                <div class="single-reward">
+                    <div class="reward-open">赏
+                        <div class="reward-main">
+                            <ul class="reward-row">
+                                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/a.png"></li>
+                                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/donate/w.png"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; width: 100%" class="social-share share-mobile"
+                     data-disabled="diandian, tencent"></div>
+                <footer class="post-footer">
+                    <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+                                                   target="_blank" rel="nofollow"><i class="fa fa-creative-commons"
+                                                                                     aria-hidden="true"></i>
+                            知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+                    <div class="post-tags">
+                    </div>
+                    <div class="post-share">
+                        <div class="social-share sharehidden share-component"></div>
+                        <i class="iconfont show-share icon-forward"></i>
+                    </div>
+                </footer><!-- .entry-footer -->
+            </article>
+            <!-- #post-## -->
+            <div class="toc" style="background: none;"></div>
+            <section class="post-squares nextprev">
+                
+                    
+                <div class="post-nepre half previous">
+                    
+                        <a href="/2021/04/26/实现数据结构(总结)/" rel="prev">
+                            <div class="background">
+                                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                     data-src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.43/2021.4.27/1.png"
+                                     style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                     onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.43/2021.4.27/1.png">
+                            </div>
+                            <span class="label">
+              Previous Post</span>
+                            <div class="info">
+                                <h3>
+                                    实现常用数据结构(总结)</h3>
+                                <hr>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    
+                        
+                    <div class="post-nepre half next">
+                        
+                            <a href="/2021/04/25/实现数据结构(树与二叉树)——序列和二叉树/" rel="next">
+                                <div class="background">
+                                    <img class="lazyload" src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.0/img/loader/loading.jpg"
+                                         data-src="https://i.loli.net/2021/04/25/qAKUcMmdyQgezLE.jpg"
+                                         style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                                         onerror="imgError(this,3)" src="https://i.loli.net/2021/04/25/qAKUcMmdyQgezLE.jpg">
+                                </div>
+                                <span class="label">
+              Next Post</span>
+                                <div class="info">
+                                    <h3>
+                                        实现常用数据结构(二叉树)——序列和二叉树</h3>
+                                    <hr>
+                                </div>
+                            </a>
+                        </div>
+                        
+            </section>
+            
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "pyh3waP7SKCHyFgcyByVN16c-gzGzoHsz",
+        appKey: "GieWKHddp2zS74VdyalPK69u",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+            <section class="author-profile">
+                <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+                    <a href="https://github.com/Zranshi" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.45/img/custom/avatar.jpg"
+                                                                                   itemprop="image"
+                                                                                   alt="Ranshi" height="70"
+                                                                                   width="70"></a>
+                    <div class="meta">
+                        <span class="title">Author</span>
+                        <h3 itemprop="name">
+                            <a href="https://github.com/Zranshi" itemprop="url" rel="author">Ranshi</a>
+                        </h3>
+                    </div>
+                </div>
+                <hr>
+                <p><i class="iconfont icon-write"></i>正是你花费在玫瑰上的时间才使得你的玫瑰花珍贵无比</p>
+            </section>
+        </main><!-- #main -->
+    </div><!-- #primary -->
+</div>
+
+
+
+    </div>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                // PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+            },
+            ROOT_URL: '/',
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 Ranshi<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="site-info">
+        <div class="footertext">
+            <div class="img-preload">
+                <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+                <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+            </div>
+            <p style="color: #666666;">&copy 2018</p>
+        </div>
+        <div class="footer-device">
+            <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/Zranshi" target="_blank"
+                                               style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i
+                    class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a
+                    href="https://zranshi.github.io/" target="_blank"
+                    style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Renaissance.の</a>&<a
+                    href="https://zranshi.github.io/" target="_blank"
+                    style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Ranshi</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+                </br>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+            </p>
+        </div>
+    </div><!-- .site-info -->
+</footer>
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        var Poi = {
+            "pjax": "1",
+            "movies": {"url": "https://ranshi-cnd-1305893362.cos.ap-guangzhou.myqcloud.com/uPic", "name": "2024.03.02-23:32:29-910368801_nb3-1-16.mp4", "live": "close"},
+            "windowheight": "fixed",
+            "codelamp": "close",
+            "ajaxurl": "",
+            "order": "asc",
+            "formpostion": "bottom"
+        };
+    } else {
+        var Poi = {
+            "pjax": "1",
+            "movies": {"url": "https://ranshi-cnd-1305893362.cos.ap-guangzhou.myqcloud.com/uPic", "name": "2024.03.02-23:32:29-910368801_nb3-1-16.mp4", "live": "open"},
+            "windowheight": "auto",
+            "codelamp": "close",
+            "ajaxurl": "",
+            "order": "asc",
+            "formpostion": "bottom"
+        };
+    }
+    /* ]]> */
+
+</script>
+<script>
+    $(document).ready(function () {
+        if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+            if ($(".pattern-center").length > 0) { //有图的情况
+                tocbot.init({
+                    // Where to render the table of contents.
+                    tocSelector: '.toc', // 放置目录的容器
+                    // Where to grab the headings to build the table of contents.
+                    contentSelector: '.entry-content', // 正文内容所在
+                    // Which headings to grab inside of the contentSelector element.
+                    scrollSmooth: true,
+                    headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+                    headingsOffset: -400,
+                    scrollSmoothOffset: -85
+                });
+            } else {
+                tocbot.init({
+                    // Where to render the table of contents.
+                    tocSelector: '.toc', // 放置目录的容器
+                    // Where to grab the headings to build the table of contents.
+                    contentSelector: '.entry-content', // 正文内容所在
+                    // Which headings to grab inside of the contentSelector element.
+                    scrollSmooth: true,
+                    headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+                    headingsOffset: -85,
+                    scrollSmoothOffset: -85
+                });
+            }
+            var offsetTop = $('.toc').offset().top - 95;
+            window.onscroll = function () {
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+                if (scrollTop >= offsetTop) {
+                    $('.toc').addClass('toc-fixed');
+                } else {
+                    $('.toc').removeClass('toc-fixed');
+                }
+            }
+        }
+    });
+</script>
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/5/2020 12:38:00");//在此处修改你的建站时间
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+
+    setInterval("createtime()", 250);
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+        <div class="iconflat no-select" style="width: 50px; height: 50px;">
+            <div class="icon"></div>
+        </div>
+        <div class="site-branding search-form-submit">
+            <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+        </div>
+    </div>
+</section>
+<div id="mo-nav" class="">
+    <div class="m-avatar">
+        <img src="https://cdn.jsdelivr.net/gh/Zranshi/CDN@1.4/img/custom/avatar.jpg">
+    </div>
+    <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">B612 PlanetのRanshi</p>
+    <p style="text-align: center; word-spacing: 20px;">
+        
+            
+                <a href="https://github.com/Zranshi" class="fa fa-github" target="_blank"
+                   style="color: #333; margin-left:20px"></a>
+            
+        
+    </p>
+    <ul id="menu-new-1" class="menu">
+        
+            <li>
+                <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/categories/技术/">
+                                    <i class="fa fa-code" aria-hidden="true"></i>
+                                    技术
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/生活/">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                    生活
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/资源/">
+                                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                    资源
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/随想/">
+                                    <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                    随想
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/categories/转载/">
+                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                    转载
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/tags/悦读/">
+                                    <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                                    书单
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/bangumi/">
+                                    <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                                    番组
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/music/">
+                                    <i class="fa fa-headphones" aria-hidden="true"></i>
+                                    歌单
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/tags/图集/">
+                                    <i class="fa fa-photo" aria-hidden="true"></i>
+                                    图集
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+                </a>
+                
+                    <ul class="sub-menu">
+                        
+                            <li>
+                                <a href="/about/">
+                                    <i class="fa fa-meetup" aria-hidden="true"></i>
+                                    我？
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/theme-sakura/">
+                                    <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                                    主题
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/lab/">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                    Lab
+                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+        
+            <li>
+                <a href="/services/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-wrench faa-spin" aria-hidden="true"></i>
+            工具集
+          </span>
+                </a>
+                
+            </li>
+        
+            <li>
+                <a href="/client/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+            客户端
+          </span>
+                </a>
+                
+            </li>
+        
+    </ul>
+    <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i
+            class="fa fa-chevron-up" aria-hidden="true"></i></button>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>
